@@ -1,5 +1,7 @@
 package com.daniel.brigadeiro.model;
 
+import com.daniel.brigadeiro.model.DTO.ClientesDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -60,6 +62,11 @@ public class Clientes{
 		this.email = email;
 	}
 	
+	 public Clientes(ClientesDTO objDTO) {
+	        super();
+	        this.id = objDTO.getId();
+	        this.nome = objDTO.getNome();
+	    }
 
 	public Clientes() {
 		super();
