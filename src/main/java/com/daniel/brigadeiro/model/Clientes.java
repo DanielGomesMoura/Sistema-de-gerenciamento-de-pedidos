@@ -1,8 +1,5 @@
-package com.daniel.brigadeiro.domain;
+package com.daniel.brigadeiro.model;
 
-import org.springframework.beans.factory.annotation.Value;
-
-import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,14 +14,21 @@ public class Clientes{
 	@Id
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 	
-	public Integer getId() {
+	@Email
+    @Column(unique = true)
+	private String email;
+	
+	private String nome;
+	
+	
+	public Long getId() {
 		return id;
 	}
 
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -49,10 +53,7 @@ public class Clientes{
 	}
 
 
-
-	private String nome;
-	
-	public Clientes(Integer id, String nome, @Email String email) {
+	public Clientes(Long id, String nome, @Email String email) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -63,12 +64,5 @@ public class Clientes{
 	public Clientes() {
 		super();
 	}
-
-
-
-	@Email
-    @Column(unique = true)
-	private String email;
-	
 
 }
