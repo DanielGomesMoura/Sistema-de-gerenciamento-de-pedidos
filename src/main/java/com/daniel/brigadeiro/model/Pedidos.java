@@ -1,7 +1,10 @@
 package com.daniel.brigadeiro.model;
 
 
+import java.time.LocalDate;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,8 +23,13 @@ public class Pedidos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-	private Date data_registro;
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	private LocalDate data_registro = LocalDate.now();
+	
 	private Double valor_total;
+	private String status;
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -30,11 +38,11 @@ public class Pedidos {
 		this.id = id;
 	}
 
-	public Date getData_registro() {
+	public LocalDate getData_registro() {
 		return data_registro;
 	}
 
-	public void setData_registro(Date data_registro) {
+	public void setData_registro(LocalDate data_registro) {
 		this.data_registro = data_registro;
 	}
 
@@ -62,13 +70,13 @@ public class Pedidos {
 		this.cliente_fk = cliente_fk;
 	}
 
-	private String status;
+	
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name ="cliente_id")
 	private Clientes cliente_fk;
 	
-	public Pedidos(Long id, Date data_registro, Double valor_total, String status, Clientes cliente_fk) {
+	public Pedidos(Long id, LocalDate data_registro, Double valor_total, String status, Clientes cliente_fk) {
 		super();
 		this.id = id;
 		this.data_registro = data_registro;
