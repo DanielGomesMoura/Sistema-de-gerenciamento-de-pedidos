@@ -1,5 +1,7 @@
 package com.daniel.brigadeiro.model;
 
+import com.daniel.brigadeiro.model.DTO.ProdutosDTO;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,6 +35,14 @@ public class Produtos {
 		this.unidade = unidade;
 	}
 	
+	public Produtos(ProdutosDTO objDTO) {
+		super();
+		this.id = objDTO.getId();
+		this.descricao = objDTO.getDescricao();
+		this.valor_custo = objDTO.getValor_custo();
+		this.valor_venda = objDTO.getValor_venda();
+		this.unidade = objDTO.getUnidade();
+	}
 	
 	public Long getId() {
 		return id;
