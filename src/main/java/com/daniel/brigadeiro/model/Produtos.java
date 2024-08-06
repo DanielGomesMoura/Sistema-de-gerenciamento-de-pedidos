@@ -1,11 +1,16 @@
 package com.daniel.brigadeiro.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.daniel.brigadeiro.model.DTO.ProdutosDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.EqualsAndHashCode;
 
 @Entity
@@ -73,6 +78,20 @@ public class Produtos {
 	}
 	public void setUnidade(String unidade) {
 		this.unidade = unidade;
+	}
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "produto_fk")
+	private List<ItensPedido> itensPedido = new ArrayList<>();
+
+
+	public List<ItensPedido> getItensPedidos() {
+		return itensPedido;
+	}
+
+
+	public void setItensPedidos(List<ItensPedido> itensPedido) {
+		this.itensPedido = itensPedido;
 	}
 
 }
