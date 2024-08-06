@@ -1,12 +1,18 @@
 package com.daniel.brigadeiro.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.daniel.brigadeiro.model.DTO.ClientesDTO;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import lombok.EqualsAndHashCode;
 
@@ -71,5 +77,20 @@ public class Clientes{
 	public Clientes() {
 		super();
 	}
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "cliente_fk")
+	private List<Pedidos> pedidos = new ArrayList<>();
+
+
+	public List<Pedidos> getPedidos() {
+		return pedidos;
+	}
+
+
+	public void setPedidos(List<Pedidos> pedidos) {
+		this.pedidos = pedidos;
+	}
+	
 
 }
