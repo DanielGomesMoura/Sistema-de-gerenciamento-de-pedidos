@@ -72,6 +72,7 @@ public class Clientes{
 	        super();
 	        this.id = objDTO.getId();
 	        this.nome = objDTO.getNome();
+	        this.email = objDTO.getEmail();
 	    }
 
 	public Clientes() {
@@ -91,6 +92,4 @@ public class Clientes{
 	public void setPedidos(List<Pedidos> pedidos) {
 		this.pedidos = pedidos;
 	}
-	
-
 }
