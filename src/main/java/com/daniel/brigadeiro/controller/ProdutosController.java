@@ -47,10 +47,10 @@ public class ProdutosController {
 	    }
 	  
 	  @PostMapping
-	    public ResponseEntity<Void> create(@Valid @RequestBody ProdutosDTO objDTO){
+	    public ResponseEntity<String> create(@Valid @RequestBody ProdutosDTO objDTO){
 	        Produtos obj = produtoService.create(objDTO);
 	        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-	        return ResponseEntity.created(uri).build();
+	        return ResponseEntity.created(uri).body("Produto cadastrado com sucesso!");
 	    }
 	     
 	     @PutMapping(value = "/{id}")

@@ -47,7 +47,7 @@ public class ProdutosService {
 	
 	public void delete(Long id) {
 		Produtos obj = findById(id);
-		if(obj.getItensPedidos().size() > 0) {
+		if(obj.getItensPedido().size() > 0) {
 			throw new DataIntegrityViolationException("Produto possui histórico de compras e não pode ser deletado");
 		}
 		produtosRepository.deleteById(id);

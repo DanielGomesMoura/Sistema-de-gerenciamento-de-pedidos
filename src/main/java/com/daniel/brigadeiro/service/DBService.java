@@ -17,9 +17,9 @@ public class DBService {
 	
 	 public void InstanciaDB() {
 
-		 Clientes cli = new Clientes(null,"Daniel Gomes Moura","daniel.tecnicop@gmail.com"); 
+		// Clientes cli = new Clientes(null,"Daniel Gomes Moura","daniel.tecnicop@gmail.com"); 
 		 
-		 clientesRepository.saveAll(Arrays.asList(cli));
+		// clientesRepository.saveAll(Arrays.asList(cli));
 		 
 	    }
 }
