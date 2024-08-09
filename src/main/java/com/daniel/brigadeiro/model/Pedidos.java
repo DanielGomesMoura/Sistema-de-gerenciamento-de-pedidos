@@ -14,11 +14,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Pedidos {
 	
@@ -28,20 +33,11 @@ public class Pedidos {
     private Long id;
 
 	@JsonFormat(pattern = "dd/MM/yyyy")
-	private LocalDate data_registro = LocalDate.now();
-	private Double valor_total;
-	private String status;
-	
+	private LocalDate data_registro;
+	private Double valor_total;	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name ="cliente_id")
 	private Clientes cliente_fk;
+	private String status;
 
-	public Pedidos(PedidosDTO objDTO) {
-		super();
-		this.id = objDTO.getId();
-		this.data_registro = objDTO.getData_registro();
-		this.valor_total = objDTO.getValor_total();
-		this.cliente_fk = objDTO.getCliente_fk();
-		this.status = objDTO.getStatus();
-	}
 }

@@ -6,7 +6,10 @@ import java.time.LocalDate;
 import com.daniel.brigadeiro.model.Clientes;
 import com.daniel.brigadeiro.model.Pedidos;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.micrometer.common.lang.NonNull;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,16 +26,16 @@ private static final long serialVersionUID = 1L;
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate data_registro = LocalDate.now();
 	private Double valor_total;
-	private Clientes cliente_fk;
+	@NotNull(message = "O campo Cliente é requerido")
+	private Long cliente_fk;
 	private String nomeCliente; 
 	private String status;
 		
 	public PedidosDTO(Pedidos obj) {
 		super();
 		this.id = obj.getId();
-		this.data_registro = obj.getData_registro();
 		this.valor_total = obj.getValor_total();
-		this.cliente_fk = obj.getCliente_fk();
+		this.cliente_fk = obj.getCliente_fk().getId();
 		this.status = obj.getStatus();
 		this.nomeCliente = obj.getCliente_fk().getNome();
 	}
