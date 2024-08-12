@@ -5,8 +5,13 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.daniel.brigadeiro.model.Clientes;
 import com.daniel.brigadeiro.model.ItensPedido;
+import com.daniel.brigadeiro.model.Pedidos;
+import com.daniel.brigadeiro.model.Produtos;
 import com.daniel.brigadeiro.model.DTO.ItensPedidoDTO;
+import com.daniel.brigadeiro.model.DTO.PedidosDTO;
 import com.daniel.brigadeiro.repository.ItensPedidoRepository;
 import com.daniel.brigadeiro.service.exception.ObjectNotFoundException;
 
@@ -17,6 +22,12 @@ public class ItensPedidoService {
 	
 	@Autowired
 	private ItensPedidoRepository itensPedidoRepository;
+	
+	@Autowired
+	PedidosService pedidosService;
+	
+	@Autowired
+	ProdutosService produtosService;
 
 	public ItensPedido findById(Long id) {
 		Optional<ItensPedido> obj = itensPedidoRepository.findById(id);
@@ -28,15 +39,29 @@ public class ItensPedidoService {
 	}
 
 	public ItensPedido create(ItensPedidoDTO objDTO) {
-		objDTO.setId(null);
-		ItensPedido obj = new ItensPedido(objDTO);
-		return itensPedidoRepository.save(obj);
+		return itensPedidoRepository.save(newPedido(objDTO));
+	}
+	
+	private ItensPedido newPedido(ItensPedidoDTO obj) {
+		Pedidos ped = pedidosService.findById(obj.getPedido_fk());
+		Produtos pro = produtosService.findById(obj.getProduto_fk());
+		
+		ItensPedido itensPedido = new ItensPedido();
+		if(obj.getId() != null) {
+			itensPedido.setId(obj.getId());
+		}
+		
+		itensPedido.setPedido_fk(ped);
+		itensPedido.setProduto_fk(pro);
+		itensPedido.setValor_unitario(obj.getValor_unitario());
+		itensPedido.setQuantidade(obj.getQuantidade());
+		return itensPedido;
 	}
 
 	public ItensPedido update(Long id, @Valid ItensPedidoDTO objDTO ) {
 		objDTO.setId(id);
 		ItensPedido oldObj = findById(id);
-		oldObj = new ItensPedido(objDTO);
-		return itensPedidoRepository.save(oldObj);		
+		oldObj = newPedido(objDTO);
+		return itensPedidoRepository.save(oldObj);
 	}
 }

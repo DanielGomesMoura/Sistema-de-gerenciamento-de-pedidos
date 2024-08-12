@@ -1,7 +1,5 @@
 package com.daniel.brigadeiro.model;
 
-import com.daniel.brigadeiro.model.DTO.ItensPedidoDTO;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -24,12 +22,8 @@ public class ItensPedido {
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 	private Integer quantidade;
-	
 	private Double valor_unitario;
-	
-	private String unidade;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "produto_id")
@@ -38,15 +32,5 @@ public class ItensPedido {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pedido_id")
 	private Pedidos pedido_fk;
-	
-	public ItensPedido(ItensPedidoDTO obj) {
-		super();
-		this.id = obj.getId();
-		this.quantidade = obj.getQuantidade();
-		this.valor_unitario = obj.getValor_unitario();
-		this.unidade = obj.getUnidade();
-		this.produto_fk = obj.getProduto_fk();
-		this.pedido_fk = obj.getPedido_fk();	
-	}
 	
 }
