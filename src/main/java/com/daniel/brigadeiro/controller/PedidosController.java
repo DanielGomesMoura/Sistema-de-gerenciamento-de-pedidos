@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.daniel.brigadeiro.model.Pedidos;
+import com.daniel.brigadeiro.model.DTO.ClientesDTO;
 import com.daniel.brigadeiro.model.DTO.PedidosDTO;
 import com.daniel.brigadeiro.service.PedidosService;
 
@@ -28,10 +29,7 @@ public class PedidosController {
 	@Autowired
 	PedidosService pedidosService;
 
-	 public PedidosController(PedidosService pedidoService) {
-	        this.pedidosService = pedidoService;
-	    }
-	
+
 	 @GetMapping(value = "/{id}")
 	public ResponseEntity<PedidosDTO> findById(@PathVariable Long id){
 		Pedidos obj = this.pedidosService.findById(id);
@@ -46,10 +44,10 @@ public class PedidosController {
 	    }
 	  
 	  @PostMapping
-	    public ResponseEntity<String> create(@Valid @RequestBody PedidosDTO objDTO){
+	    public ResponseEntity<ClientesDTO> create(@Valid @RequestBody PedidosDTO objDTO){
 	        Pedidos obj = pedidosService.create(objDTO);
 	        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-	        return ResponseEntity.created(uri).body("Pedido cadastrado com sucesso!");
+	        return ResponseEntity.created(uri).build();
 	    }
 	     
 	     @PutMapping(value = "/{id}")

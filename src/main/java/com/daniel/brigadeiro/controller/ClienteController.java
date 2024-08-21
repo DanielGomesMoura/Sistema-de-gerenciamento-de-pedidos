@@ -47,10 +47,10 @@ public class ClienteController {
 	    }
 	  
 	  @PostMapping
-	    public ResponseEntity<String> create(@Valid @RequestBody ClientesDTO objDTO){
+	    public ResponseEntity<ClientesDTO> create(@Valid @RequestBody ClientesDTO objDTO){
 	        Clientes obj = clientesService.create(objDTO);
 	        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-	        return ResponseEntity.created(uri).body("Cliente cadastrado com sucesso!");
+	        return ResponseEntity.created(uri).build();
 	    }
 	     
 	     @PutMapping(value = "/{id}")

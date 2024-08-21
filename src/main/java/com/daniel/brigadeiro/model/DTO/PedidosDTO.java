@@ -2,8 +2,11 @@ package com.daniel.brigadeiro.model.DTO;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.daniel.brigadeiro.model.Clientes;
+import com.daniel.brigadeiro.model.ItensPedido;
 import com.daniel.brigadeiro.model.Pedidos;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -30,6 +33,7 @@ private static final long serialVersionUID = 1L;
 	private Long cliente_fk;
 	private String nomeCliente; 
 	private String status;
+	private List<ItensPedidoDTO> itensPedido;
 		
 	public PedidosDTO(Pedidos obj) {
 		super();
@@ -38,5 +42,8 @@ private static final long serialVersionUID = 1L;
 		this.cliente_fk = obj.getCliente_fk().getId();
 		this.status = obj.getStatus();
 		this.nomeCliente = obj.getCliente_fk().getNome();
+		this.itensPedido = obj.getItensPedido().stream()
+				.map(ItensPedidoDTO::new)
+				.collect(Collectors.toList());
 	}
 }

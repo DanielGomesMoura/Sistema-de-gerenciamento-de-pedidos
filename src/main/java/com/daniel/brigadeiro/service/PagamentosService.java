@@ -18,12 +18,13 @@ public class PagamentosService {
 	
 	@Autowired
 	PagamentosRepository pagamentosRepository;
-	
-	@Autowired
-	PedidosService pedidosService;
+
 	
 	@Autowired
 	PedidosRepository pedidosRepository;
+	
+	@Autowired
+	PedidosService pedidosService;
 
 
 	

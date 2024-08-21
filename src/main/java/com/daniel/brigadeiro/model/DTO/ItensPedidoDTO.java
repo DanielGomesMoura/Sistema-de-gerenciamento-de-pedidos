@@ -24,7 +24,7 @@ public class ItensPedidoDTO implements Serializable{
 	private Long produto_fk;
 	private Long pedido_fk;
 	private String descricao_produto; 
-
+	
 	public ItensPedidoDTO(ItensPedido obj) {
 		super();
 		this.id = obj.getId();
@@ -34,7 +34,6 @@ public class ItensPedidoDTO implements Serializable{
 		this.pedido_fk = obj.getPedido_fk().getId();
 		this.descricao_produto = obj.getProduto_fk().getDescricao();
 		this.unidade = obj.getProduto_fk().getUnidade();
-		
 	}
 
 }
