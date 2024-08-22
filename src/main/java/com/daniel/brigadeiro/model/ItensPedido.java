@@ -1,8 +1,5 @@
 package com.daniel.brigadeiro.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -19,7 +16,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties({"produto_fk","pedido_fk"})
 public class ItensPedido {
 	
 	@Id
@@ -31,12 +27,10 @@ public class ItensPedido {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "produto_id")
-	@JsonIgnore
 	private Produtos produto_fk;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "pedido_id")
-	@JsonIgnore
 	private Pedidos pedido_fk;
 	
 }

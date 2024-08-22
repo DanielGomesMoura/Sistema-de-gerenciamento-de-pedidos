@@ -72,7 +72,6 @@ public class PedidosService {
 				item.setValor_unitario(itemDTO.getValor_unitario());
 				item.setQuantidade(itemDTO.getQuantidade());
 				item.setProduto_fk(pro);
-				
 				itensPedidoList.add(item);
 			}
 			pedido.setItensPedido(itensPedidoList);
