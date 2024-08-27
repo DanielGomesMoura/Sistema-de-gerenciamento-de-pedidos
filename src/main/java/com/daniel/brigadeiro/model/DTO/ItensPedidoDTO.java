@@ -3,15 +3,12 @@ package com.daniel.brigadeiro.model.DTO;
 import java.io.Serializable;
 
 import com.daniel.brigadeiro.model.ItensPedido;
-import com.daniel.brigadeiro.model.Pedidos;
-import com.daniel.brigadeiro.model.Produtos;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
 public class ItensPedidoDTO implements Serializable{
 
