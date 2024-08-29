@@ -34,10 +34,10 @@ public class PagamentosController {
 		}
 	 
 	 @PostMapping
-	    public ResponseEntity<String> create(@Valid @RequestBody PagamentosDTO objDTO){
+	    public ResponseEntity<PagamentosDTO> create(@Valid @RequestBody PagamentosDTO objDTO){
 		 Pagamentos obj = pagamentosService.create(objDTO);
 	        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-	        return ResponseEntity.created(uri).body("Pedido cadastrado com sucesso!");
+	        return ResponseEntity.created(uri).build();
 	    }
 	 
 	    @PutMapping(value = "/{id}")
