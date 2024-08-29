@@ -32,7 +32,7 @@ public class PagamentosController {
 			Pagamentos obj = this.pagamentosService.findById(id);
 			return ResponseEntity.ok().body(new PagamentosDTO(obj));
 		}
-	 
+
 	 @PostMapping
 	    public ResponseEntity<PagamentosDTO> create(@Valid @RequestBody PagamentosDTO objDTO){
 		 Pagamentos obj = pagamentosService.create(objDTO);
