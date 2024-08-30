@@ -3,6 +3,7 @@ package com.daniel.brigadeiro.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -41,8 +42,9 @@ public class SecurityConfig{
                 .addFilter(new JWTAuthenticationFilter(authenticationConfiguration.getAuthenticationManager(),jwtUtil))
                 .addFilter(new JWTAuthorizationFilter(authenticationConfiguration.getAuthenticationManager(),jwtUtil,detailsService))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authoriza -> authoriza .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
-                .requestMatchers(new AntPathRequestMatcher("/login")).permitAll() // Permitir acesso ao /login
+                .authorizeHttpRequests(authoriza -> authoriza
+                		.requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/teste")).permitAll() // Permitir acesso ao /login
                 .anyRequest().authenticated())
 				.build();
     }

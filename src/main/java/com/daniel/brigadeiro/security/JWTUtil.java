@@ -1,4 +1,4 @@
-package com.Daniel.helpdesk.security;
+package com.daniel.brigadeiro.security;
 
 
 import java.time.Instant;
@@ -20,10 +20,13 @@ public class JWTUtil {
 	@Value("${jwt.secret}")
 	private String secret;
 
-	public String genarateToken(String email) {
+	public String genarateToken(String email, String perfil) {
 		try {
 			Algorithm algorithm = Algorithm.HMAC512(secret);
-			return JWT.create().withIssuer("auth-api").withSubject(email).withExpiresAt(gerarDataExpiracao())
+			return JWT.create().withIssuer("auth-api")
+					.withSubject(email)
+					.withClaim("perfil", perfil)
+					.withExpiresAt(gerarDataExpiracao())
 					.sign(algorithm);
 		} catch (JWTCreationException ex) {
 			throw new RuntimeException("Erro ao gerar o Token" + ex.getMessage());

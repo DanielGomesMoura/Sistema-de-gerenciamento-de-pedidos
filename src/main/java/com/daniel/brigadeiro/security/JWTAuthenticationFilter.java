@@ -4,14 +4,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.naming.AuthenticationException;
-
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.daniel.brigadeiro.model.Admin;
 import com.daniel.brigadeiro.model.DTO.CredentialsDTO;
 import com.daniel.brigadeiro.service.exception.DataIntegrityViolationException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,7 +33,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-			throws AuthenticationException {
+			throws AuthenticationException{
 		try {
 			CredentialsDTO cred = new ObjectMapper().readValue(request.getInputStream(), CredentialsDTO.class);
 			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
@@ -50,8 +49,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
 		
-		String username = ((UserSS) authResult.getPrincipal()).getUsername();
-		String token = jwtUtil.genarateToken(username);
+		String username = ((Admin) authResult.getPrincipal()).getUsername();
+		String perfil = ((Admin) authResult.getPrincipal()).getAuthorities().toString();
+		String token = jwtUtil.genarateToken(username,perfil);
 		response.setHeader("access-control-expose-headers", "Authorization");
 		response.setHeader("Authorization", "Bearer " + token);
 	}
