@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 import com.daniel.brigadeiro.model.Pagamentos;
-import com.daniel.brigadeiro.model.Pedidos;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
