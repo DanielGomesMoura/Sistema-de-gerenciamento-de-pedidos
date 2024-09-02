@@ -43,6 +43,13 @@ public class PedidosController {
 	        return ResponseEntity.ok().body(listDTO);
 	    }
 	  
+	  @GetMapping("ranking")
+	    public ResponseEntity<List<PedidosDTO>> Ranking(){
+	        List<Pedidos> list = pedidosService.ranking();
+	        List<PedidosDTO> listDTO = list.stream().map(PedidosDTO::new).collect(Collectors.toList());
+	        return ResponseEntity.ok().body(listDTO);
+	    }
+	  
 	  @PostMapping
 	    public ResponseEntity<ClientesDTO> create(@Valid @RequestBody PedidosDTO objDTO){
 	        Pedidos obj = pedidosService.create(objDTO);

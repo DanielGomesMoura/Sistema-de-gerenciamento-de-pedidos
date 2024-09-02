@@ -44,6 +44,10 @@ public class PedidosService {
 	public List<Pedidos> findAll() {
 		return pedidosRepository.findAll();
 	}
+	
+	public List<Pedidos> ranking() {
+		return pedidosRepository.findPedidosByStatus();
+	}
 
 	public Pedidos create(PedidosDTO objDTO) {
 		return pedidosRepository.save(newPedido(objDTO));
