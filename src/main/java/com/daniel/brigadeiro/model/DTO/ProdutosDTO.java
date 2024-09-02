@@ -19,6 +19,7 @@ public class ProdutosDTO implements Serializable {
 	private String descricao;
 	private Double valor_custo;
 	private Double valor_venda;
+	private Double valor_promocional;
 	private String unidade;
 	
 	public ProdutosDTO(Produtos obj) {
@@ -27,6 +28,7 @@ public class ProdutosDTO implements Serializable {
 		this.descricao = obj.getDescricao();
 		this.valor_custo = obj.getValor_custo();
 		this.valor_venda = obj.getValor_venda();
+		this.valor_promocional = obj.getValor_promocional();
 		this.unidade = obj.getUnidade();
 	}
 }

@@ -32,6 +32,7 @@ public class Produtos {
 	private String descricao;
 	private Double valor_custo;
 	private Double valor_venda;
+	private Double valor_promocional;
 	private String unidade;
 	
 	@JsonIgnore
@@ -44,7 +45,7 @@ public class Produtos {
 		this.descricao = objDTO.getDescricao();
 		this.valor_custo = objDTO.getValor_custo();
 		this.valor_venda = objDTO.getValor_venda();
+		this.valor_promocional = objDTO.getValor_promocional();
 		this.unidade = objDTO.getUnidade();
 	}
-
 }

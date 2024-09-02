@@ -117,7 +117,6 @@ public class PedidosService {
 
 			newItensPedidoList.add(item);
 		}
-
 		// Remove os itens que não estão na nova lista
 		oldPedido.getItensPedido().removeIf(item -> !newItensPedidoList.contains(item));
 

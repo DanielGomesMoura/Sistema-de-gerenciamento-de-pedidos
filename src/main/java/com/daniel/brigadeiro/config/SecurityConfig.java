@@ -44,7 +44,6 @@ public class SecurityConfig{
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authoriza -> authoriza
                 		.requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/teste")).permitAll() // Permitir acesso ao /login
                 .anyRequest().authenticated())
 				.build();
     }

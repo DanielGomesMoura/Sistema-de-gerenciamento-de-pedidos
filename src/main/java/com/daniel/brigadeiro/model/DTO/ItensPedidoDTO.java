@@ -17,6 +17,8 @@ public class ItensPedidoDTO implements Serializable{
 	private Long id;
 	private Integer quantidade;
 	private Double valor_unitario;
+	private Double valor_venda;
+	private Double valor_promocional;
 	private String unidade;
 	private Long produto_fk;
 	private Long pedido_fk;
@@ -27,6 +29,8 @@ public class ItensPedidoDTO implements Serializable{
 		this.id = obj.getId();
 		this.quantidade = obj.getQuantidade();
 		this.valor_unitario = obj.getValor_unitario();
+		this.valor_venda = obj.getProduto_fk().getValor_venda();
+		this.valor_promocional = obj.getProduto_fk().getValor_promocional();
 		this.produto_fk = obj.getProduto_fk().getId();
 		this.pedido_fk = obj.getPedido_fk().getId();
 		this.descricao_produto = obj.getProduto_fk().getDescricao();
