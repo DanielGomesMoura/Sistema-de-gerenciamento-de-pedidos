@@ -27,7 +27,7 @@ private static final long serialVersionUID = 1L;
 	private Long id;
 	
 	@JsonFormat(pattern = "dd/MM/yyyy")
-	private LocalDate data_registro = LocalDate.now();
+	private LocalDate data_registro;
 	private Double valor_total;
 	@NotNull(message = "O campo Cliente é requerido")
 	private Long cliente_fk;
@@ -38,6 +38,7 @@ private static final long serialVersionUID = 1L;
 	public PedidosDTO(Pedidos obj) {
 		super();
 		this.id = obj.getId();
+		this.data_registro = obj.getData_registro();
 		this.valor_total = obj.getValor_total();
 		this.cliente_fk = obj.getCliente_fk().getId();
 		this.status = obj.getStatus();

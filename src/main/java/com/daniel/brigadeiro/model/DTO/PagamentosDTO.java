@@ -24,7 +24,7 @@ public class PagamentosDTO implements Serializable {
 	private Double valor_total;
 
 	@JsonFormat(pattern = "dd/MM/yyyy")
-	private LocalDate data_registro_pagamento = LocalDate.now();
+	private LocalDate data_registro_pagamento;
 
 
 	public PagamentosDTO(Pagamentos obj) {

@@ -1,5 +1,6 @@
 package com.daniel.brigadeiro.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -82,7 +83,7 @@ public class PedidosService {
 		pedido.setCliente_fk(cli);
 		pedido.setValor_total(objDTO.getValor_total());
 		pedido.setStatus("ABERTO");
-		pedido.setData_registro(objDTO.getData_registro());
+		pedido.setData_registro(LocalDate.now());
 
 		// Associa os ItensPedido ao Pedido
 		if (objDTO.getItensPedido() != null && !objDTO.getItensPedido().isEmpty()) {
@@ -113,7 +114,7 @@ public class PedidosService {
 		Clientes cli = clientesService.findById(objDTO.getCliente_fk());
 		oldPedido.setCliente_fk(cli);
 		oldPedido.setValor_total(objDTO.getValor_total());
-		oldPedido.setData_registro(objDTO.getData_registro());
+		oldPedido.setData_registro(LocalDate.now());
 		
 		// Status é mantido como está ou atualizado conforme sua lógica
 

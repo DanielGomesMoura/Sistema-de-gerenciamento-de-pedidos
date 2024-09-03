@@ -1,5 +1,6 @@
 package com.daniel.brigadeiro.service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,7 @@ public class PagamentosService {
 			pagamento.setId(obj.getId());
 		}
 		pagamento.setPedido_fk(ped);
+		pagamento.setData_registro_pagamento(LocalDate.now());
 		pagamento.setTipo_pagamento(obj.getTipo_pagamento());
 		pagamento.setValor_pagamento(obj.getValor_pagamento());
 		return pagamento;

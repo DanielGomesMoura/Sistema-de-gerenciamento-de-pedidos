@@ -29,7 +29,7 @@ public class Pagamentos {
     private Long id;
 	
 	@JsonFormat(pattern = "dd/MM/yyyy")
-	private LocalDate data_registro_pagamento = LocalDate.now();
+	private LocalDate data_registro_pagamento;
 	
 	private String tipo_pagamento;
 	
