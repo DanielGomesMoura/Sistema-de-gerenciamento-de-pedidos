@@ -31,7 +31,7 @@ public class ClientesService {
 	public Clientes create(ClientesDTO objDTO) {
 
 		objDTO.setId(null);
-		//validaEmail(objDTO);
+		validaEmail(objDTO);
 
 		Clientes obj = new Clientes(objDTO);
 		return clientesRepository.save(obj);

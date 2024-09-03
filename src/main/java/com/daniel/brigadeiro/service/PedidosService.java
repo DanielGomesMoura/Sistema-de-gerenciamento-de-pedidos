@@ -14,6 +14,7 @@ import com.daniel.brigadeiro.model.Pedidos;
 import com.daniel.brigadeiro.model.Produtos;
 import com.daniel.brigadeiro.model.DTO.ItensPedidoDTO;
 import com.daniel.brigadeiro.model.DTO.PedidosDTO;
+import com.daniel.brigadeiro.model.DTO.RankDTO;
 import com.daniel.brigadeiro.repository.ItensPedidoRepository;
 import com.daniel.brigadeiro.repository.PedidosRepository;
 import com.daniel.brigadeiro.service.exception.DataIntegrityViolationException;
@@ -45,9 +46,26 @@ public class PedidosService {
 		return pedidosRepository.findAll();
 	}
 	
-	public List<Pedidos> ranking() {
-		return pedidosRepository.findPedidosByStatus();
+	//CONSULTA USANDO JPQL
+	
+	public List<RankDTO> ranking() {
+		return itensPedidoRepository.findPedidosByStatus();
 	}
+	
+	//CONSULTA USANDO SQL NATIVO
+	
+//	public List<RankDTO> ranking(){
+//		List<Object[]> resultado = itensPedidoRepository.findPedidosByStatusNativo();
+//		List<RankDTO> rank = new ArrayList<>();
+//		
+//		   for (Object[] result : resultado) {
+//	            String nomeCliente = (String) result[0];
+//	            Long quantidade = ((Number) result[1]).longValue();
+//	            rank.add(new RankDTO(nomeCliente, quantidade));
+//	        }
+//
+//	        return rank;
+//	    }
 
 	public Pedidos create(PedidosDTO objDTO) {
 		return pedidosRepository.save(newPedido(objDTO));

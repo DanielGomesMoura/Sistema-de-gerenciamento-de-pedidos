@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.daniel.brigadeiro.model.Pedidos;
 import com.daniel.brigadeiro.model.DTO.ClientesDTO;
 import com.daniel.brigadeiro.model.DTO.PedidosDTO;
+import com.daniel.brigadeiro.model.DTO.RankDTO;
 import com.daniel.brigadeiro.service.PedidosService;
 
 import jakarta.validation.Valid;
@@ -44,10 +45,9 @@ public class PedidosController {
 	    }
 	  
 	  @GetMapping("ranking")
-	    public ResponseEntity<List<PedidosDTO>> Ranking(){
-	        List<Pedidos> list = pedidosService.ranking();
-	        List<PedidosDTO> listDTO = list.stream().map(PedidosDTO::new).collect(Collectors.toList());
-	        return ResponseEntity.ok().body(listDTO);
+	    public ResponseEntity<List<RankDTO>> Ranking(){
+		  List<RankDTO> listDTO = pedidosService.ranking();
+		    return ResponseEntity.ok().body(listDTO);
 	    }
 	  
 	  @PostMapping
