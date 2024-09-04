@@ -15,7 +15,8 @@ public interface ItensPedidoRepository extends JpaRepository<ItensPedido, Long>{
 		       "INNER JOIN i.pedido_fk p " +
 		       "INNER JOIN p.cliente_fk c " +
 		       "WHERE p.status = 'PAGO' " +
-		       "GROUP BY c.nome")
+		       "GROUP BY c.nome "+
+		       "ORDER BY quantidade DESC")
 		List<RankDTO> findPedidosByStatus();
 	
 	
