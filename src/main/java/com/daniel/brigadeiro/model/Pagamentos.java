@@ -1,7 +1,6 @@
 package com.daniel.brigadeiro.model;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

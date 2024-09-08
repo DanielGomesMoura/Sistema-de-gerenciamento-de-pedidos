@@ -5,13 +5,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.daniel.brigadeiro.model.Clientes;
-import com.daniel.brigadeiro.model.ItensPedido;
 import com.daniel.brigadeiro.model.Pedidos;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import io.micrometer.common.lang.NonNull;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
