@@ -18,6 +18,8 @@ public class Movimento_CaixaDTO implements Serializable{
 	private Long id;
 	private String descricao;
 	private Long recebimento_fk;
+	private String conta;
+	private String tipo_recebimento;
 	private LocalDate data_registro;
 	private String tipo;
 	
@@ -25,6 +27,8 @@ public class Movimento_CaixaDTO implements Serializable{
 		this.id = obj.getId();
 		this.descricao = obj.getDescricao();
 		this.recebimento_fk = obj.getRecebimento_fk().getId();
+		this.conta = obj.getRecebimento_fk().getConta_fk().getConta();
+		this.tipo_recebimento = obj.getRecebimento_fk().getTipo();
 		this.data_registro = obj.getData_registro();
 		this.tipo = obj.getTipo();
 	}

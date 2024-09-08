@@ -5,9 +5,13 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.daniel.brigadeiro.model.Movimento_Caixa;
 import com.daniel.brigadeiro.model.Pagamentos;
 import com.daniel.brigadeiro.model.Pedidos;
+import com.daniel.brigadeiro.model.Tipo_Recebimento;
 import com.daniel.brigadeiro.model.DTO.PagamentosDTO;
+import com.daniel.brigadeiro.repository.Movimento_CaixaRepository;
 import com.daniel.brigadeiro.repository.PagamentosRepository;
 import com.daniel.brigadeiro.repository.PedidosRepository;
 import com.daniel.brigadeiro.service.exception.ObjectNotFoundException;
@@ -25,7 +29,13 @@ public class PagamentosService {
 	PedidosRepository pedidosRepository;
 	
 	@Autowired
+	Movimento_CaixaRepository caixaRepository;
+	
+	@Autowired
 	PedidosService pedidosService;
+	
+	@Autowired
+	Tipo_RecebimentoService recebimentoService;
 
 
 	
@@ -43,11 +53,24 @@ public class PagamentosService {
 		pedido.setStatus("PAGO");
 		pedidosRepository.save(pedido);
 	 }
+	
+	Tipo_Recebimento recebimento = pagamento.getTipo_recebimento_fk();
+	Movimento_Caixa movimento = new Movimento_Caixa();
+
+	movimento.setData_registro(LocalDate.now());
+	movimento.setDescricao("Compra - "+LocalDate.now());
+	movimento.setData_registro(LocalDate.now());
+	movimento.setRecebimento_fk(recebimento);
+	movimento.setTipo("ENTRADA");
+	caixaRepository.save(movimento);
+	
+
 	 return pagamento;
 	}
 	
 	private Pagamentos newPagamento(PagamentosDTO obj) {
 		Pedidos ped = pedidosService.findById(obj.getPedido_fk());
+		Tipo_Recebimento recebimento = recebimentoService.findById(obj.getTipo_recebimento_fk());
 		
 		Pagamentos pagamento = new Pagamentos();
 		if(obj.getId() != null) {
@@ -55,7 +78,7 @@ public class PagamentosService {
 		}
 		pagamento.setPedido_fk(ped);
 		pagamento.setData_registro_pagamento(LocalDate.now());
-		pagamento.setTipo_pagamento(obj.getTipo_pagamento());
+		pagamento.setTipo_recebimento_fk(recebimento);
 		pagamento.setValor_pagamento(obj.getValor_pagamento());
 		return pagamento;
 	}

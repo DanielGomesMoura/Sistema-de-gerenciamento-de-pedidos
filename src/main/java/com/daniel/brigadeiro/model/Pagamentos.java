@@ -30,7 +30,9 @@ public class Pagamentos {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate data_registro_pagamento;
 	
-	private String tipo_pagamento;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "recebimento_id")
+	private Tipo_Recebimento tipo_recebimento_fk;
 	
 	private Double valor_pagamento;
 	

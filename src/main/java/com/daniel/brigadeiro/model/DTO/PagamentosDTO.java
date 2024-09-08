@@ -18,7 +18,7 @@ public class PagamentosDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-	private String tipo_pagamento;
+	private Long tipo_recebimento_fk;
 	private Double valor_pagamento;
 	private Long pedido_fk;
 	private Double valor_total;
@@ -30,7 +30,7 @@ public class PagamentosDTO implements Serializable {
 	public PagamentosDTO(Pagamentos obj) {
 		super();
 		this.id = obj.getId();
-		this.tipo_pagamento = obj.getTipo_pagamento();
+		this.tipo_recebimento_fk = obj.getTipo_recebimento_fk().getId();
 		this.valor_pagamento = obj.getValor_pagamento();
 		this.pedido_fk = obj.getPedido_fk().getId();
 		this.data_registro_pagamento = obj.getData_registro_pagamento();
