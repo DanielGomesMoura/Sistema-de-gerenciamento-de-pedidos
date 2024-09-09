@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.daniel.brigadeiro.model.Movimento_Caixa;
-import com.daniel.brigadeiro.model.Tipo_Recebimento;
 import com.daniel.brigadeiro.model.DTO.Movimento_CaixaDTO;
 import com.daniel.brigadeiro.service.Movimento_CaixaService;
 

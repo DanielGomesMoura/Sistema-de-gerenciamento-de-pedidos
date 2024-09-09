@@ -1,6 +1,5 @@
 package com.daniel.brigadeiro.service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,12 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.daniel.brigadeiro.model.Conta;
-import com.daniel.brigadeiro.model.Pagamentos;
-import com.daniel.brigadeiro.model.Pedidos;
 import com.daniel.brigadeiro.model.Tipo_Recebimento;
-import com.daniel.brigadeiro.model.DTO.PagamentosDTO;
 import com.daniel.brigadeiro.model.DTO.Tipo_RecebimentoDTO;
+import com.daniel.brigadeiro.repository.ContaRepository;
 import com.daniel.brigadeiro.repository.Tipo_RecebimentoRepository;
+import com.daniel.brigadeiro.service.exception.DataIntegrityViolationException;
 import com.daniel.brigadeiro.service.exception.ObjectNotFoundException;
 
 import jakarta.validation.Valid;
@@ -27,6 +25,9 @@ public class Tipo_RecebimentoService {
 	@Autowired 
 	private ContaService contaService;
 	
+	@Autowired
+	private ContaRepository contaRepository;
+	
 	public Tipo_Recebimento findById(Long id) {
 		Optional<Tipo_Recebimento> obj = recebimentoRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado id: " + id));
@@ -34,6 +35,20 @@ public class Tipo_RecebimentoService {
 
 	public List<Tipo_Recebimento> findAll() {
 		return recebimentoRepository.findAll();
+	}
+	
+	private void validarConta(Tipo_RecebimentoDTO objDTO) {
+	    // Primeiro, busque a conta pelo ID
+	    Conta conta = contaRepository.findById(objDTO.getConta_fk())
+	        .orElseThrow(() -> new DataIntegrityViolationException("Conta não encontrada"));
+
+	    // Agora, verifique se já existe um Tipo_Recebimento com essa conta
+	    Optional<Tipo_Recebimento> obj = recebimentoRepository.findByConta(conta);
+
+	    // Verifica se já existe um Tipo_Recebimento com a mesma conta e se o ID é diferente (caso seja uma atualização)
+	    if (obj.isPresent() && !obj.get().getId().equals(objDTO.getId())) {
+	        throw new DataIntegrityViolationException("Conta já cadastrada");
+	    }
 	}
 	
 	public Tipo_Recebimento create(Tipo_RecebimentoDTO objDTO) {
@@ -49,6 +64,7 @@ public class Tipo_RecebimentoService {
 			if(obj.getId() != null) {
 				recebimento.setId(obj.getId());
 			}
+			validarConta(obj);
 			recebimento.setConta_fk(conta);
 			recebimento.setTipo(obj.getTipo());
 		
