@@ -62,6 +62,7 @@ public class PagamentosService {
 	movimento.setData_registro(LocalDate.now());
 	movimento.setRecebimento_fk(recebimento);
 	movimento.setTipo("ENTRADA");
+	movimento.setValor(pedido.getValor_total());
 	caixaRepository.save(movimento);
 	
 

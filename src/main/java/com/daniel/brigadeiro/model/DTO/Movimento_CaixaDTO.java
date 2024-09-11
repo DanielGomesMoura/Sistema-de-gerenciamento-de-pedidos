@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 import com.daniel.brigadeiro.model.Movimento_Caixa;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,8 +21,10 @@ public class Movimento_CaixaDTO implements Serializable{
 	private Long recebimento_fk;
 	private String conta;
 	private String tipo_recebimento;
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate data_registro;
 	private String tipo;
+	private Double valor;
 	
 	public Movimento_CaixaDTO(Movimento_Caixa obj) {
 		this.id = obj.getId();
@@ -31,5 +34,6 @@ public class Movimento_CaixaDTO implements Serializable{
 		this.tipo_recebimento = obj.getRecebimento_fk().getTipo();
 		this.data_registro = obj.getData_registro();
 		this.tipo = obj.getTipo();
+		this.valor = obj.getValor();
 	}
 }

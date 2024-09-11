@@ -43,7 +43,7 @@ public class Tipo_RecebimentoService {
 	        .orElseThrow(() -> new DataIntegrityViolationException("Conta não encontrada"));
 
 	    // Agora, verifique se já existe um Tipo_Recebimento com essa conta
-	    Optional<Tipo_Recebimento> obj = recebimentoRepository.findByConta(conta);
+	    Optional<Tipo_Recebimento> obj = recebimentoRepository.findByConta(conta,objDTO.getTipo());
 
 	    // Verifica se já existe um Tipo_Recebimento com a mesma conta e se o ID é diferente (caso seja uma atualização)
 	    if (obj.isPresent() && !obj.get().getId().equals(objDTO.getId())) {

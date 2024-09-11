@@ -12,6 +12,6 @@ import java.util.Optional;
 
 public interface Tipo_RecebimentoRepository extends JpaRepository<Tipo_Recebimento, Long>{
 
-	  @Query("SELECT tr FROM Tipo_Recebimento tr WHERE tr.conta_fk = :conta")
-	    Optional<Tipo_Recebimento> findByConta(@Param("conta") Conta conta);
+	  @Query("SELECT tr FROM Tipo_Recebimento tr WHERE tr.conta_fk = :conta and tr.tipo = :tipo")
+	    Optional<Tipo_Recebimento> findByConta(@Param("conta") Conta conta,@Param("tipo")String tipo);
 }
