@@ -1,5 +1,6 @@
 package com.daniel.brigadeiro.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.daniel.brigadeiro.model.Conta;
 import com.daniel.brigadeiro.model.Movimento_Caixa;
+import com.daniel.brigadeiro.model.Pedidos;
 import com.daniel.brigadeiro.model.Tipo_Recebimento;
 import com.daniel.brigadeiro.model.DTO.Movimento_CaixaDTO;
 import com.daniel.brigadeiro.repository.Movimento_CaixaRepository;
@@ -51,6 +53,18 @@ public class Movimento_CaixaService {
 		
 			return movimento;
 		}
+		
+		 public void registrarMovimento(Pedidos pedido, Tipo_Recebimento recebimento) {
+		        Movimento_Caixa movimento = new Movimento_Caixa();
+		        
+		        movimento.setData_registro(LocalDate.now());
+		        movimento.setDescricao("Compra - " + LocalDate.now());
+		        movimento.setRecebimento_fk(recebimento);
+		        movimento.setTipo("ENTRADA");
+		        movimento.setValor(pedido.getValor_total());
+		        
+		        caixaRepository.save(movimento);
+		    }
 		
 		public Movimento_Caixa update(Long id, @Valid Movimento_CaixaDTO objDTO ) {
 			objDTO.setId(id);

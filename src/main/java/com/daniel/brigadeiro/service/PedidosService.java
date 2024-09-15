@@ -50,7 +50,17 @@ public class PedidosService {
 	//CONSULTA USANDO JPQL
 	
 	public List<RankDTO> ranking() {
-		return itensPedidoRepository.findPedidosByStatus();
+		// Obter as datas de início (segunda-feira) e fim (sexta-feira) da semana atual
+		LocalDate data = LocalDate.now();
+        LocalDate[] intervaloSemana = DataSemanaService.getIntervaloSemana();
+        LocalDate dataInicio = intervaloSemana[0]; // Segunda-feira
+        LocalDate dataFim = intervaloSemana[1]; // Sexta-feira
+		 List<RankDTO> result = itensPedidoRepository.findPedidosByStatus(dataInicio,dataFim);
+		    int index = 1;
+		    for (RankDTO dto : result) {
+		        dto.setRowId(index++); // Supondo que você tenha um campo `rowNumber` no `RankDTO`
+		    }
+		return result;
 	}
 	
 	//CONSULTA USANDO SQL NATIVO
@@ -146,5 +156,10 @@ public class PedidosService {
 		// Atualiza a lista de itens do pedido
 		oldPedido.getItensPedido().clear();
 		oldPedido.getItensPedido().addAll(newItensPedidoList);
+	}
+
+	public void atualizarStatusParaPago(Pedidos pedido) {
+		pedido.setStatus("PAGO");
+		pedidosRepository.save(pedido);
 	}
 }

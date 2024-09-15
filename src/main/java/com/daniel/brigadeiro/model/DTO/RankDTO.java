@@ -10,6 +10,7 @@ import lombok.Setter;
 public class RankDTO {
 	private String nome;
 	private Long quantidade;
+	private Integer rowId;
 
 	public RankDTO(String nome, Long quantidade) {
 		this.nome = nome;

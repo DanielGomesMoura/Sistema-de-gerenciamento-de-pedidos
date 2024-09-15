@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.daniel.brigadeiro.model.Movimento_Caixa;
+import com.daniel.brigadeiro.config.webSocket.RankingWebSocketHandler;
 import com.daniel.brigadeiro.model.Pagamentos;
 import com.daniel.brigadeiro.model.Pedidos;
 import com.daniel.brigadeiro.model.Tipo_Recebimento;
@@ -35,10 +35,14 @@ public class PagamentosService {
 	PedidosService pedidosService;
 	
 	@Autowired
-	Tipo_RecebimentoService recebimentoService;
-
-
+	Movimento_CaixaService caixaService;
 	
+	@Autowired
+	Tipo_RecebimentoService recebimentoService;
+	
+	@Autowired
+    RankingWebSocketHandler webSocketHandler;
+
 	public Pagamentos findById(Long id) {
 		Optional<Pagamentos> obj = pagamentosRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado id: " + id));
@@ -49,25 +53,32 @@ public class PagamentosService {
 	 
 	 Pedidos pedido = pagamento.getPedido_fk();
 	 
-	 if(pedido != null) {
-		pedido.setStatus("PAGO");
-		pedidosRepository.save(pedido);
+	 if (pedido != null)
+	 {
+	   pedidosService.atualizarStatusParaPago(pedido); 
 	 }
 	
-	Tipo_Recebimento recebimento = pagamento.getTipo_recebimento_fk();
-	Movimento_Caixa movimento = new Movimento_Caixa();
-
-	movimento.setData_registro(LocalDate.now());
-	movimento.setDescricao("Compra - "+LocalDate.now());
-	movimento.setData_registro(LocalDate.now());
-	movimento.setRecebimento_fk(recebimento);
-	movimento.setTipo("ENTRADA");
-	movimento.setValor(pedido.getValor_total());
-	caixaRepository.save(movimento);
-	
-
+	 try {
+         caixaService.registrarMovimento(pedido, pagamento.getTipo_recebimento_fk());
+     } catch (Exception e) {
+         // Tratamento de exceção
+         System.err.println("Erro ao registrar movimentação de caixa: " + e.getMessage());
+     }
+	 
+	 // Envia uma atualização para todos os clientes conectados via WebSocket
+     try {
+         String message = createRankingUpdateMessage(); // Método para criar a mensagem de atualização
+         webSocketHandler.sendMessageToClients(message);
+     } catch (Exception e) {
+         e.printStackTrace();
+     }
 	 return pagamento;
 	}
+	
+	private String createRankingUpdateMessage() {
+        // Implemente a lógica para criar a mensagem de atualização do ranking
+        return "Ranking atualizado"; // Exemplo simplificado
+    }
 	
 	private Pagamentos newPagamento(PagamentosDTO obj) {
 		Pedidos ped = pedidosService.findById(obj.getPedido_fk());

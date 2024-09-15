@@ -43,6 +43,7 @@ public class SecurityConfig{
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authoriza -> authoriza
                 		.requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
+                		.requestMatchers("/ws-rank/**").permitAll() // Permite acesso à rota WebSocket
                 .anyRequest().authenticated())
 				.build();
     }
