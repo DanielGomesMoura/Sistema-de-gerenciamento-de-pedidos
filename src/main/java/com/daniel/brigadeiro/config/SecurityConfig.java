@@ -1,5 +1,7 @@
 package com.daniel.brigadeiro.config;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +16,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.daniel.brigadeiro.security.JWTAuthenticationFilter;
 import com.daniel.brigadeiro.security.JWTAuthorizationFilter;
@@ -60,17 +65,17 @@ public class SecurityConfig{
 	        );
 	    }
 	 
-//	    @Bean
-//	    public CorsConfigurationSource corsConfigurationSource() {
-//	        CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
-//	        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
-//	        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-//	        corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
-//	        corsConfiguration.setAllowCredentials(true);
-//	        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//	        source.registerCorsConfiguration("/**", corsConfiguration);
-//	        return source;
-//	    }
+	    @Bean
+	    public CorsConfigurationSource corsConfigurationSource() {
+	        CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
+	        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://10.10.4.241:4200"));  // Inclua outras origens necessárias
+	        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+	        corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+	        corsConfiguration.setAllowCredentials(true);
+	        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+	        source.registerCorsConfiguration("/**", corsConfiguration);
+	        return source;
+	    }
 	 
 	    @Bean
 	     BCryptPasswordEncoder bCryptPasswordEncoder() {

@@ -1,6 +1,9 @@
 package com.daniel.brigadeiro.service;
 
 import java.time.temporal.TemporalAdjusters;
+
+import org.aspectj.lang.annotation.After;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
@@ -25,7 +28,12 @@ public class DataSemanaService {
 
     // Método privado para calcular a data de início (segunda-feira) e fim (sexta-feira)
     private static void calcularIntervaloSemana(LocalDate hoje) {
-        dataInicioSemana = hoje.with(TemporalAdjusters.nextOrSame(DayOfWeek.MONDAY));
-        dataFimSemana = hoje.with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY));
+    	if(hoje.getDayOfWeek().compareTo(DayOfWeek.MONDAY) > 0 && hoje.getDayOfWeek().compareTo(DayOfWeek.FRIDAY) <= 0) {
+    		dataInicioSemana = hoje.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+    	}
+    	else{
+    		dataInicioSemana = hoje.with(TemporalAdjusters.nextOrSame(DayOfWeek.MONDAY));
+    	}
+		 dataFimSemana = hoje.with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY));
     }
 }

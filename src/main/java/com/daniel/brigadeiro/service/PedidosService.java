@@ -51,7 +51,6 @@ public class PedidosService {
 	
 	public List<RankDTO> ranking() {
 		// Obter as datas de início (segunda-feira) e fim (sexta-feira) da semana atual
-		LocalDate data = LocalDate.now();
         LocalDate[] intervaloSemana = DataSemanaService.getIntervaloSemana();
         LocalDate dataInicio = intervaloSemana[0]; // Segunda-feira
         LocalDate dataFim = intervaloSemana[1]; // Sexta-feira
