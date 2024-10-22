@@ -14,9 +14,6 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 @Component
 public class JWTUtil {
 
-	@Value("${jwt.expiration}")
-	private Long expiration;
-
 	@Value("${jwt.secret}")
 	private String secret;
 

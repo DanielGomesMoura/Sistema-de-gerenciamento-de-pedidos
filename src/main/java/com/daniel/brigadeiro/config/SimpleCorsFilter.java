@@ -19,7 +19,7 @@ public class SimpleCorsFilter implements Filter{
 	        HttpServletRequest request = (HttpServletRequest) req;
 	        String origin = request.getHeader("Origin");
 	        // Permitir apenas as origens específicas
-	        if ("http://localhost:4200".equals(origin) || "http://10.10.4.241:4200".equals(origin)) {
+	        if ("http://localhost:4200".equals(origin)) {
 	            response.setHeader("Access-Control-Allow-Origin", origin);
 	        }
 
