@@ -47,6 +47,10 @@ public class PedidosService {
 		return pedidosRepository.findAll();
 	}
 	
+	public List<Pedidos> findByDay(LocalDate dataInicial, LocalDate dataFinal) {
+		return pedidosRepository.findByDay(dataInicial, dataFinal);
+	} 
+	
 	//CONSULTA USANDO JPQL
 	
 	public List<RankDTO> ranking() {

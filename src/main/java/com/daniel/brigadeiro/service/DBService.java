@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.daniel.brigadeiro.model.Admin;
 import com.daniel.brigadeiro.model.Clientes;
+import com.daniel.brigadeiro.model.Conta;
+import com.daniel.brigadeiro.model.Tipo_Recebimento;
 import com.daniel.brigadeiro.model.DTO.ClientesDTO;
 import com.daniel.brigadeiro.model.enums.Perfil;
 import com.daniel.brigadeiro.repository.AdminRepository;
@@ -31,7 +33,7 @@ public class DBService {
 		 Clientes cli = new Clientes(null,"Daniel Gomes Moura","daniel.tecnicoi@gmail.com",null); 
 		 
 		 Admin admin = new Admin(null, "daniel.tecnicop@gmail.com", "Daniel Gomes Moura",encoder.encode("Daniel0101"),Perfil.ADMIN);
-		 
+		
 		 
 		 clientesRepository.saveAll(Arrays.asList(cli));
 		 adminRepository.save(admin);

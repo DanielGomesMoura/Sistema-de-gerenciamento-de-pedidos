@@ -1,10 +1,12 @@
 package com.daniel.brigadeiro.controller;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.daniel.brigadeiro.model.Pedidos;
@@ -36,6 +39,14 @@ public class PedidosController {
 		Pedidos obj = this.pedidosService.findById(id);
 		return ResponseEntity.ok().body(new PedidosDTO(obj));
 	}
+	 
+	 @GetMapping("/filter")
+	    public ResponseEntity<List<PedidosDTO>> findByDay( @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate dataInicio,
+	            @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate dataFinal){
+	        List<Pedidos> list = pedidosService.findByDay(dataInicio, dataFinal);
+	        List<PedidosDTO> listDTO = list.stream().map(PedidosDTO::new).collect(Collectors.toList());
+	        return ResponseEntity.ok().body(listDTO);
+	    }
 	
 	  @GetMapping
 	    public ResponseEntity<List<PedidosDTO>> findAll(){
