@@ -89,7 +89,7 @@ public class PagamentosService {
 			pagamento.setId(obj.getId());
 		}
 		pagamento.setPedido_fk(ped);
-		pagamento.setData_registro_pagamento(LocalDate.now());
+		pagamento.setData_registro_pagamento(obj.getData_registro_pagamento());
 		pagamento.setTipo_recebimento_fk(recebimento);
 		pagamento.setValor_pagamento(obj.getValor_pagamento());
 		return pagamento;

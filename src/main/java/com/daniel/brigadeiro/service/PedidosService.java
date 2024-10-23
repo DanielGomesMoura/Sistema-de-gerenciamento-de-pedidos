@@ -18,7 +18,6 @@ import com.daniel.brigadeiro.model.DTO.PedidosDTO;
 import com.daniel.brigadeiro.model.DTO.RankDTO;
 import com.daniel.brigadeiro.repository.ItensPedidoRepository;
 import com.daniel.brigadeiro.repository.PedidosRepository;
-import com.daniel.brigadeiro.service.exception.DataIntegrityViolationException;
 import com.daniel.brigadeiro.service.exception.ObjectNotFoundException;
 
 import jakarta.validation.Valid;
@@ -127,7 +126,7 @@ public class PedidosService {
 		Clientes cli = clientesService.findById(objDTO.getCliente_fk());
 		oldPedido.setCliente_fk(cli);
 		oldPedido.setValor_total(objDTO.getValor_total());
-		oldPedido.setData_registro(LocalDate.now());
+		oldPedido.setData_registro(objDTO.getData_registro());
 		
 		// Status é mantido como está ou atualizado conforme sua lógica
 
