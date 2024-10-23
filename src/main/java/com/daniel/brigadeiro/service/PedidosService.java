@@ -92,7 +92,7 @@ public class PedidosService {
 		pedido.setCliente_fk(cli);
 		pedido.setValor_total(objDTO.getValor_total());
 		pedido.setStatus("ABERTO");
-		pedido.setData_registro(LocalDate.now());
+		pedido.setData_registro(objDTO.getData_registro());
 
 		// Associa os ItensPedido ao Pedido
 		if (objDTO.getItensPedido() != null && !objDTO.getItensPedido().isEmpty()) {
