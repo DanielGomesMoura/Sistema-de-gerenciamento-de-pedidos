@@ -40,20 +40,20 @@ public class PedidosController {
 		return ResponseEntity.ok().body(new PedidosDTO(obj));
 	}
 	 
-	 @GetMapping("/filter")
-	    public ResponseEntity<List<PedidosDTO>> findByDay( @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate dataInicio,
+	 @GetMapping()
+	    public ResponseEntity<List<PedidosDTO>> findAll( @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate dataInicio,
 	            @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate dataFinal){
 	        List<Pedidos> list = pedidosService.findByDay(dataInicio, dataFinal);
 	        List<PedidosDTO> listDTO = list.stream().map(PedidosDTO::new).collect(Collectors.toList());
 	        return ResponseEntity.ok().body(listDTO);
 	    }
 	
-	  @GetMapping
-	    public ResponseEntity<List<PedidosDTO>> findAll(){
-	        List<Pedidos> list = pedidosService.findAll();
-	        List<PedidosDTO> listDTO = list.stream().map(PedidosDTO::new).collect(Collectors.toList());
-	        return ResponseEntity.ok().body(listDTO);
-	    }
+//	  @GetMapping
+//	    public ResponseEntity<List<PedidosDTO>> findAll(){
+//	        List<Pedidos> list = pedidosService.findAll();
+//	        List<PedidosDTO> listDTO = list.stream().map(PedidosDTO::new).collect(Collectors.toList());
+//	        return ResponseEntity.ok().body(listDTO);
+//	    }
 	  
 	  @GetMapping("ranking")
 	    public ResponseEntity<List<RankDTO>> Ranking(){
