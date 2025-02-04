@@ -1,13 +1,23 @@
 package com.daniel.brigadeiro.controller;
 
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +32,9 @@ import com.daniel.brigadeiro.model.Pedidos;
 import com.daniel.brigadeiro.model.DTO.ClientesDTO;
 import com.daniel.brigadeiro.model.DTO.PedidosDTO;
 import com.daniel.brigadeiro.model.DTO.RankDTO;
+import com.daniel.brigadeiro.service.EmailService;
 import com.daniel.brigadeiro.service.PedidosService;
+import com.daniel.brigadeiro.service.RelatorioService;
 
 import jakarta.validation.Valid;
 
@@ -33,12 +45,60 @@ public class PedidosController {
 	@Autowired
 	PedidosService pedidosService;
 
+    @Autowired
+    private RelatorioService reportService;
+    
+    @Autowired
+    private EmailService emailService;
+    
+    @Autowired
+    private JavaMailSender mailSender;
 
 	 @GetMapping(value = "/{id}")
 	public ResponseEntity<PedidosDTO> findById(@PathVariable Long id){
 		Pedidos obj = this.pedidosService.findById(id);
 		return ResponseEntity.ok().body(new PedidosDTO(obj));
 	}
+	 
+	     @GetMapping("/view/{reportName}")
+	     public ResponseEntity<byte[]> viewReport(@PathVariable String reportName) {
+	         try {
+	             byte[] reportData = reportService.generateReport(reportName);
+	             HttpHeaders headers = new HttpHeaders();
+	             headers.setContentType(MediaType.APPLICATION_PDF);
+	             return ResponseEntity.ok().headers(headers).body(reportData);
+	         } catch (Exception e) {
+	             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+	         }
+	     }
+	     
+	     @PostMapping("/email/{reportName}")
+	     public ResponseEntity<String> emailReport(@PathVariable String reportName, @RequestParam String to) {
+	         try {
+	             byte[] reportData = reportService.generateReport(reportName);
+	             Path path = Files.write(Paths.get(reportName + ".pdf"), reportData);
+
+	             emailService.sendEmailWithAttachment(to, "Seu Relatório", "Segue em anexo o relatório solicitado.", path.toString());
+	             return ResponseEntity.ok("E-mail enviado com sucesso!");
+	         } catch (Exception e) {
+	             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao enviar e-mail: " + e.getMessage());
+	         }
+	     }
+	     
+	     @GetMapping("/testemail") 
+	     public String sendTestEmail() {
+	         try {
+	             SimpleMailMessage message = new SimpleMailMessage();
+	             message.setTo("destino@example.com");
+	             message.setSubject("Teste de Envio de E-mail");
+	             message.setText("Se você está recebendo este e-mail, significa que o envio de e-mails está funcionando corretamente!");
+	             mailSender.send(message);
+	             return "E-mail enviado com sucesso!";
+	         } catch (Exception e) {
+	             e.printStackTrace();
+	             return "Erro ao enviar e-mail: " + e.getMessage();
+	         }
+	     }
 	 
 	 @GetMapping()
 	    public ResponseEntity<List<PedidosDTO>> findAll( @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate dataInicio,

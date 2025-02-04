@@ -38,8 +38,6 @@ public class Insumos {
 		this.unidade = objDto.getUnidade();
 		this.custo_unitario = objDto.getCusto_unitario();
 	}
-	
-	
 }
 
 
