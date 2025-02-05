@@ -84,21 +84,6 @@ public class PedidosController {
 	             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao enviar e-mail: " + e.getMessage());
 	         }
 	     }
-	     
-	     @GetMapping("/testemail") 
-	     public String sendTestEmail() {
-	         try {
-	             SimpleMailMessage message = new SimpleMailMessage();
-	             message.setTo("destino@example.com");
-	             message.setSubject("Teste de Envio de E-mail");
-	             message.setText("Se você está recebendo este e-mail, significa que o envio de e-mails está funcionando corretamente!");
-	             mailSender.send(message);
-	             return "E-mail enviado com sucesso!";
-	         } catch (Exception e) {
-	             e.printStackTrace();
-	             return "Erro ao enviar e-mail: " + e.getMessage();
-	         }
-	     }
 	 
 	 @GetMapping()
 	    public ResponseEntity<List<PedidosDTO>> findAll( @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate dataInicio,

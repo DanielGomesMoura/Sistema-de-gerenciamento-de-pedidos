@@ -45,6 +45,9 @@ where p.data_registro =  CURRENT_DATE]]>
 		<property name="com.jaspersoft.studio.field.label" value="status"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="pedidos"/>
 	</field>
+	<variable name="totalValor" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor_total}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -60,9 +63,9 @@ where p.data_registro =  CURRENT_DATE]]>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="66" splitType="Stretch">
+		<band height="17" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="50" width="80" height="16" backcolor="#FAF8A5" uuid="1276fe72-1c0a-421f-b59e-ad7b46cfacec"/>
+				<reportElement mode="Opaque" x="0" y="1" width="80" height="16" backcolor="#FAF8A5" uuid="1276fe72-1c0a-421f-b59e-ad7b46cfacec"/>
 				<box>
 					<pen lineWidth="1.0"/>
 				</box>
@@ -70,7 +73,7 @@ where p.data_registro =  CURRENT_DATE]]>
 				<text><![CDATA[Data]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="80" y="50" width="140" height="16" backcolor="#FAF8A5" uuid="c0a3a6df-1a04-438d-8046-455d76d70970"/>
+				<reportElement mode="Opaque" x="80" y="1" width="140" height="16" backcolor="#FAF8A5" uuid="c0a3a6df-1a04-438d-8046-455d76d70970"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.0"/>
 				</box>
@@ -78,7 +81,7 @@ where p.data_registro =  CURRENT_DATE]]>
 				<text><![CDATA[Cliente]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="220" y="50" width="80" height="16" backcolor="#FAF8A5" uuid="658e5ddf-5d2f-4e7f-9786-54fadd2c8715">
+				<reportElement mode="Opaque" x="220" y="1" width="80" height="16" backcolor="#FAF8A5" uuid="658e5ddf-5d2f-4e7f-9786-54fadd2c8715">
 					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
 				</reportElement>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
@@ -90,7 +93,7 @@ where p.data_registro =  CURRENT_DATE]]>
 				<text><![CDATA[Valor]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="490" y="50" width="65" height="16" backcolor="#FAF8A5" uuid="578936ab-4671-4ba1-adb5-09d5af6aa91b"/>
+				<reportElement mode="Opaque" x="490" y="1" width="65" height="16" backcolor="#FAF8A5" uuid="578936ab-4671-4ba1-adb5-09d5af6aa91b"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.0"/>
 				</box>
@@ -98,7 +101,7 @@ where p.data_registro =  CURRENT_DATE]]>
 				<text><![CDATA[Situação]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="410" y="50" width="80" height="16" backcolor="#FAF8A5" uuid="69967c04-02ed-4ef4-ac74-9fa2bc417b6e"/>
+				<reportElement mode="Opaque" x="410" y="1" width="80" height="16" backcolor="#FAF8A5" uuid="69967c04-02ed-4ef4-ac74-9fa2bc417b6e"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.0"/>
 				</box>
@@ -106,7 +109,7 @@ where p.data_registro =  CURRENT_DATE]]>
 				<text><![CDATA[Conta]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="300" y="50" width="110" height="16" backcolor="#FAF8A5" uuid="729482c5-b855-4604-a1fd-79adac5377a6"/>
+				<reportElement mode="Opaque" x="300" y="1" width="110" height="16" backcolor="#FAF8A5" uuid="729482c5-b855-4604-a1fd-79adac5377a6"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.0"/>
 				</box>
@@ -121,6 +124,10 @@ where p.data_registro =  CURRENT_DATE]]>
 				<reportElement x="0" y="0" width="80" height="20" uuid="e8d93619-f199-4f18-887c-b1e2e1f55ab0">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="56bc98a6-9430-43f7-a8e2-7575bc998a62"/>
 				</reportElement>
+				<box>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{data_registro}]]></textFieldExpression>
 			</textField>
@@ -129,6 +136,9 @@ where p.data_registro =  CURRENT_DATE]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9f626770-e262-44f9-941d-b80547c3ceda"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
 				<textElement verticalAlignment="Middle">
 					<paragraph leftIndent="1"/>
 				</textElement>
@@ -139,6 +149,9 @@ where p.data_registro =  CURRENT_DATE]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8ea72639-0015-4fd7-94fb-15df1b04cf8f"/>
 					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
 				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<paragraph lineSpacingSize="1.0" rightIndent="5"/>
 				</textElement>
@@ -148,6 +161,9 @@ where p.data_registro =  CURRENT_DATE]]>
 				<reportElement x="300" y="0" width="110" height="20" uuid="c5df5f57-4b12-4fd2-adc6-3fae1b6f111d">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="35ea2b48-22cc-449e-81bb-fc981d5a1d6d"/>
 				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{tipo} == null ? "-" : $F{tipo}]]></textFieldExpression>
 			</textField>
@@ -155,6 +171,9 @@ where p.data_registro =  CURRENT_DATE]]>
 				<reportElement x="410" y="0" width="80" height="20" uuid="1515a948-c105-4ea1-822a-e50c4c7849ec">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="00e0ce5f-3519-46a1-a35f-6f1e846c50d9"/>
 				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{conta} == null ? "-" : $F{conta}]]></textFieldExpression>
 			</textField>
@@ -162,12 +181,39 @@ where p.data_registro =  CURRENT_DATE]]>
 				<reportElement x="490" y="0" width="65" height="20" uuid="eed9a6dc-acf0-4a8b-b440-c5ab12537b3a">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d5871077-4b12-4e4f-81f5-c4a085c8097f"/>
 				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
+	<summary>
+		<band height="20">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="20" backcolor="#EFE9F7" uuid="ee87df33-7fd0-41a9-877d-10e4ca5431fb"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="220" y="0" width="80" height="20" uuid="cf3e08e7-2d2b-4782-a71f-a7bb6f071423">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalValor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="220" height="20" uuid="4e46eede-cad4-4ec2-8142-9b123977f9c8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Total:]]></text>
+			</staticText>
+		</band>
+	</summary>
 </jasperReport>

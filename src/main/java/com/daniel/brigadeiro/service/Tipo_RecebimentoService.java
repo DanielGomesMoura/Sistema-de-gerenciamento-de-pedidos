@@ -37,6 +37,10 @@ public class Tipo_RecebimentoService {
 		return recebimentoRepository.findAll();
 	}
 	
+	public List<Tipo_Recebimento> findByTipoRecebimento() {
+		return recebimentoRepository.findByTipoRecebimento();
+	}
+	
 	private void validarConta(Tipo_RecebimentoDTO objDTO) {
 	    // Primeiro, busque a conta pelo ID
 	    Conta conta = contaRepository.findById(objDTO.getConta_fk())
