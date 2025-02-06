@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.daniel.brigadeiro.model.Tipo_Recebimento;
 import com.daniel.brigadeiro.model.DTO.Tipo_RecebimentoDTO;
+import com.daniel.brigadeiro.projection.TipoRecebimentoProjection;
 import com.daniel.brigadeiro.service.Tipo_RecebimentoService;
 
 import jakarta.validation.Valid;
@@ -42,11 +43,10 @@ public class Tipo_RecebimentoController {
 	        return ResponseEntity.ok().body(listDTO);
 	    }
 	  
-	  @GetMapping(value = "/{tiporecebimento}")
-	    public ResponseEntity<List<Tipo_RecebimentoDTO>> findByTipoRecebimento(@PathVariable String tipoRecebimento){
-	        List<Tipo_Recebimento> list = recebimentoService.findAll();
-	        List<Tipo_RecebimentoDTO> listDTO = list.stream().map(Tipo_RecebimentoDTO::new).collect(Collectors.toList());
-	        return ResponseEntity.ok().body(listDTO);
+	  @GetMapping(value = "/combo/{tipo}")
+	    public ResponseEntity<List<TipoRecebimentoProjection>> findByTipoRecebimento(@PathVariable String tipo){
+	        List<TipoRecebimentoProjection> list = recebimentoService.findByTipoRecebimento(tipo);
+	        return ResponseEntity.ok().body(list);
 	    }
 	  
 	  @PostMapping

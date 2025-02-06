@@ -50,9 +50,6 @@ public class PedidosController {
     
     @Autowired
     private EmailService emailService;
-    
-    @Autowired
-    private JavaMailSender mailSender;
 
 	 @GetMapping(value = "/{id}")
 	public ResponseEntity<PedidosDTO> findById(@PathVariable Long id){

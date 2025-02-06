@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.daniel.brigadeiro.model.Conta;
 import com.daniel.brigadeiro.model.Tipo_Recebimento;
 import com.daniel.brigadeiro.model.DTO.Tipo_RecebimentoDTO;
+import com.daniel.brigadeiro.projection.TipoRecebimentoProjection;
 import com.daniel.brigadeiro.repository.ContaRepository;
 import com.daniel.brigadeiro.repository.Tipo_RecebimentoRepository;
 import com.daniel.brigadeiro.service.exception.DataIntegrityViolationException;
@@ -37,8 +38,8 @@ public class Tipo_RecebimentoService {
 		return recebimentoRepository.findAll();
 	}
 	
-	public List<Tipo_Recebimento> findByTipoRecebimento() {
-		return recebimentoRepository.findByTipoRecebimento();
+	public List<TipoRecebimentoProjection> findByTipoRecebimento(String tipo) {
+		return recebimentoRepository.findAllTipoAndDescricao(tipo);
 	}
 	
 	private void validarConta(Tipo_RecebimentoDTO objDTO) {
