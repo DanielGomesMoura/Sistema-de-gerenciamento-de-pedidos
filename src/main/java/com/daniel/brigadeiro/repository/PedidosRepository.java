@@ -13,6 +13,7 @@ public interface PedidosRepository extends JpaRepository<Pedidos, Long>{
 
 	@Query("SELECT p FROM Pedidos p " +
 		   "JOIN p.cliente_fk c " +
-		       "WHERE p.data_registro BETWEEN :dataInicio AND :dataFim ") // Filtra pela data da semana
-		List<Pedidos>findByDay(@Param("dataInicio") LocalDate dataInicio, @Param("dataFim") LocalDate dataFinal);
+		       "WHERE p.data_registro BETWEEN :dataInicio AND :dataFim "
+		       + "and p.status like :situacao") // Filtra pela data da semana
+		List<Pedidos>findByDay(@Param("dataInicio") LocalDate dataInicio, @Param("dataFim") LocalDate dataFinal, @Param("situacao") String situacao);
 }

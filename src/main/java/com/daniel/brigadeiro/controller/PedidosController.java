@@ -84,8 +84,8 @@ public class PedidosController {
 	 
 	 @GetMapping()
 	    public ResponseEntity<List<PedidosDTO>> findAll( @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate dataInicio,
-	            @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate dataFinal){
-	        List<Pedidos> list = pedidosService.findByDay(dataInicio, dataFinal);
+	            @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate dataFinal, @RequestParam String situacao){
+	        List<Pedidos> list = pedidosService.findByDay(dataInicio, dataFinal,situacao);
 	        List<PedidosDTO> listDTO = list.stream().map(PedidosDTO::new).collect(Collectors.toList());
 	        return ResponseEntity.ok().body(listDTO);
 	    }

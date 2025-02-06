@@ -59,7 +59,7 @@ public class PagamentosService {
 	 }
 	
 	 try {
-         caixaService.registrarMovimento(pedido, pagamento.getTipo_recebimento_fk());
+         caixaService.registrarMovimento(pedido, pagamento);
      } catch (Exception e) {
          // Tratamento de exceção
          System.err.println("Erro ao registrar movimentação de caixa: " + e.getMessage());

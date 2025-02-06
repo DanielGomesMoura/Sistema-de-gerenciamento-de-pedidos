@@ -1,14 +1,14 @@
 package com.daniel.brigadeiro.service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.daniel.brigadeiro.model.Conta;
 import com.daniel.brigadeiro.model.Movimento_Caixa;
+import com.daniel.brigadeiro.model.Pagamentos;
 import com.daniel.brigadeiro.model.Pedidos;
 import com.daniel.brigadeiro.model.Tipo_Recebimento;
 import com.daniel.brigadeiro.model.DTO.Movimento_CaixaDTO;
@@ -54,12 +54,18 @@ public class Movimento_CaixaService {
 			return movimento;
 		}
 		
-		 public void registrarMovimento(Pedidos pedido, Tipo_Recebimento recebimento) {
+		 public void registrarMovimento(Pedidos pedido, Pagamentos pagamento) {
+			   // Criar um objeto SimpleDateFormat com o padrão desejado
+
+
+		        // Criar um objeto DateTimeFormatter com o padrão desejado
+		        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		        
 		        Movimento_Caixa movimento = new Movimento_Caixa();
 		        
-		        movimento.setData_registro(LocalDate.now());
-		        movimento.setDescricao("Compra - " + LocalDate.now());
-		        movimento.setRecebimento_fk(recebimento);
+		        movimento.setData_registro(pagamento.getData_registro_pagamento());
+		        movimento.setDescricao("N° Pedido: " +  String.format("%04d", pedido.getId()) + " Compra realizada dia - " + pedido.getData_registro().format(formatter));
+		        movimento.setRecebimento_fk(pagamento.getTipo_recebimento_fk());
 		        movimento.setTipo("ENTRADA");
 		        movimento.setValor(pedido.getValor_total());
 		        

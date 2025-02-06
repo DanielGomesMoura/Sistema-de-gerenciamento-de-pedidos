@@ -5,20 +5,21 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="brigadeiro"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="568"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="418"/>
-	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="0"/>
-	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="1000"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="24"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="965"/>
 	<queryString language="SQL">
-		<![CDATA[select p.data_registro, c.nome, p.valor_total, tr.tipo, cc.conta , p.status from pedidos p  
+		<![CDATA[select pg.data_registro_pagamento, c.nome, sum(p.valor_total) as valor_total, tr.tipo, cc.conta, p.status from pedidos p  
 inner join clientes c on c.id  = p.cliente_id
 left join pagamentos pg on pg.pedido_id = p.id
 left join tipo_recebimento tr on tr.id = pg.recebimento_id
 left join conta cc on cc.id  = tr.conta_id
-where p.data_registro =  CURRENT_DATE]]>
+where pg.data_registro_pagamento =  CURRENT_DATE
+group by pg.data_registro_pagamento, c.nome, tr.tipo, cc.conta, p.status]]>
 	</queryString>
-	<field name="data_registro" class="java.sql.Date">
-		<property name="com.jaspersoft.studio.field.name" value="data_registro"/>
-		<property name="com.jaspersoft.studio.field.label" value="data_registro"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="pedidos"/>
+	<field name="data_registro_pagamento" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="data_registro_pagamento"/>
+		<property name="com.jaspersoft.studio.field.label" value="data_registro_pagamento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pagamentos"/>
 	</field>
 	<field name="nome" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nome"/>
@@ -129,7 +130,7 @@ where p.data_registro =  CURRENT_DATE]]>
 					<bottomPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{data_registro}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{data_registro_pagamento}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="80" y="0" width="140" height="20" uuid="5639e082-13fd-4ae1-8e99-36237d3ceb5b">

@@ -42,12 +42,14 @@ public class PedidosService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado id: " + id));
 	}
 
-	public List<Pedidos> findAll() {
-		return pedidosRepository.findAll();
-	}
+//	public List<Pedidos> findAll() {
+//		return pedidosRepository.findAll();
+//	}
 	
-	public List<Pedidos> findByDay(LocalDate dataInicial, LocalDate dataFinal) {
-		return pedidosRepository.findByDay(dataInicial, dataFinal);
+	public List<Pedidos> findByDay(LocalDate dataInicial, LocalDate dataFinal, String situacao) {
+		if(situacao.equals("TODOS"))
+		   situacao = "%";
+		return pedidosRepository.findByDay(dataInicial, dataFinal, situacao);
 	} 
 	
 	//CONSULTA USANDO JPQL
