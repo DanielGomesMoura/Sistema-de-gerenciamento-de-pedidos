@@ -1,62 +1,41 @@
 package com.daniel.brigadeiro.service.EmailSchedulerService;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+
+import com.daniel.brigadeiro.service.EmailService;
+import com.daniel.brigadeiro.service.RelatorioService;
 
 @Service
 public class EmailSchedulerService {
 
-//	private final RestTemplate restTemplate;
-//    private final String loginUrl = "http://localhost:8080/login";
-//    private final String email = "seu_email@example.com";
-//    private final String senha = "sua_senha";
-//    private String jwtToken;
-//
-//    public EmailSchedulerService(RestTemplate restTemplate) {
-//        this.restTemplate = restTemplate;
-//        this.jwtToken = obterTokenJwt();
-//    }
-//    
-//    private String obterTokenJwt() {
-//        // Credenciais de login
-//        String requestJson = String.format("{\"email\": \"%s\", \"senha\": \"%s\"}", email, senha);
-//        
-//        // Configurar cabeçalhos HTTP para a requisição de login
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.set("Content-Type", "application/json");
-//        
-//        // Criar entidade HTTP com as credenciais de login
-//        HttpEntity<String> entity = new HttpEntity<>(requestJson, headers);
-//        
-//        // Fazer a requisição POST para obter o token JWT
-//        ResponseEntity<String> response = restTemplate.exchange(loginUrl, HttpMethod.POST, entity, String.class);
-//        
-//        // Supondo que o token esteja no corpo da resposta
-//        String token = response.getBody();
-//        
-//        return token;
-//    }
-//
-//    @Scheduled(cron = "0 40 16 * * ?")
-//    public void enviarRelatorioEmail() {
-//        String url = "http://localhos://8080/pedidos/relatorio_venda_diaria";
-//
-//        // Configurar cabeçalhos HTTP com o token JWT
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.set("Authorization", "Bearer " + jwtToken);
-//
-//        // Criar entidade HTTP com os cabeçalhos
-//        HttpEntity<String> entity = new HttpEntity<>(headers);
-//
-//        // Fazer a requisição POST com o token JWT
-//        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
-//
-//        // Verificar a resposta da requisição
-//        if (response.getStatusCode().is2xxSuccessful()) {
-//            System.out.println("Relatório enviado com sucesso às 16:40");
-//        } else {
-//            System.out.println("Erro ao enviar o relatório: " + response.getStatusCode());
-//        }
-//    }
+	@Autowired
+    private RelatorioService reportService;
+	
+	@Autowired
+	private EmailService emailService;
+  
+
+    @Scheduled(cron = "0 40 16 * * ?")
+    public void enviarRelatorioEmail() {
+    	String reportName = "relatorio_venda_diaria"; // Nome do relatório agendado
+        String recipientEmail = "anabeatriz.pereirasantos1997@gmail.com"; // Endereço de e-mail do destinatário
+
+        try {
+            byte[] reportData = reportService.generateReport(reportName);
+            Path path = Files.write(Paths.get(reportName + ".pdf"), reportData);
+
+            emailService.sendEmailWithAttachment(recipientEmail, "Relatório Agendado", "Segue em anexo o relatório agendado.", path.toString());
+
+            System.out.println("E-mail enviado com sucesso!");
+        } catch (Exception e) {
+            System.err.println("Erro ao enviar e-mail: " + e.getMessage());
+        }
+
+    }
 }
