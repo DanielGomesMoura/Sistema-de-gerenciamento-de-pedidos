@@ -23,20 +23,13 @@ public class Insumos {
 	@EqualsAndHashCode.Include
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 	private String  descricao;
-	private Integer quantidade;
-	private String  unidade;
-	private Double  custo_unitario;
 	
 	
 	public Insumos(InsumosDTO objDto) {
 		super();
 		this.id = objDto.getId();
 		this.descricao = objDto.getDescricao();
-		this.quantidade = objDto.getQuantidade();
-		this.unidade = objDto.getUnidade();
-		this.custo_unitario = objDto.getCusto_unitario();
 	}
 }
 

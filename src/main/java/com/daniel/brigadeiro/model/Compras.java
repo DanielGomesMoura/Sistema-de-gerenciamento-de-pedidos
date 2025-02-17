@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EntradaInsumos {
+public class Compras {
 	
 	@Id
     @EqualsAndHashCode.Include
@@ -28,11 +28,12 @@ public class EntradaInsumos {
 	private Long id;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name ="insumos_id")
-	private Insumos insumos;
+	private Insumos insumos_fk;
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate data_registro;
 	private Integer quantidade;
 	private Double custo_unitario;
-	private String Fornecedor;
+	private Double custo_total;
+	private String fornecedor;
 	private String nota_fiscal; 
 }
