@@ -1,6 +1,7 @@
 package com.daniel.brigadeiro.controller;
 
 import java.net.URI;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -73,9 +74,16 @@ public class PedidosController {
 	     public ResponseEntity<String> emailReport(@PathVariable String reportName, @RequestParam String to) {
 	         try {
 	             byte[] reportData = reportService.generateReport(reportName);
-	             Path path = Files.write(Paths.get(reportName + ".pdf"), reportData);
+	        
+	             // Obter o caminho baseado no sistema operacional
+	             Path downloadPath = Paths.get("/app/relatorios", reportName + ".pdf");
+	             
+	             // Garantir que a pasta existe
+	             Files.createDirectories(downloadPath.getParent());
 
-	             emailService.sendEmailWithAttachment(to, "Seu Relatório", "Segue em anexo o relatório solicitado.", path.toString());
+	             Files.write(downloadPath, reportData);
+
+	             emailService.sendEmailWithAttachment(to, "Seu Relatório", "Segue em anexo o relatório solicitado.", downloadPath.toString());
 	             return ResponseEntity.ok("E-mail enviado com sucesso!");
 	         } catch (Exception e) {
 	             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao enviar e-mail: " + e.getMessage());
