@@ -4,10 +4,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.daniel.brigadeiro.model.Clientes;
 import com.daniel.brigadeiro.model.ItensPedido;
@@ -19,17 +21,21 @@ import com.daniel.brigadeiro.model.DTO.RankDTO;
 import com.daniel.brigadeiro.repository.ItensPedidoRepository;
 import com.daniel.brigadeiro.repository.PedidosRepository;
 import com.daniel.brigadeiro.service.exception.ObjectNotFoundException;
-
 import jakarta.validation.Valid;
 
 @Service
 public class PedidosService {
+	
+	private static final Logger LOGGER = Logger.getLogger(PedidosService.class.getName());
 
 	@Autowired
 	PedidosRepository pedidosRepository;
 
 	@Autowired
 	ItensPedidoRepository itensPedidoRepository;
+	
+	@Autowired
+	ItensPedidoService itensPedidoService;
 
 	@Autowired
 	ClientesService clientesService;
@@ -116,10 +122,12 @@ public class PedidosService {
 		return pedido;
 	}
 
+	@Transactional
 	public Pedidos update(Long id, @Valid PedidosDTO objDTO) {
 		objDTO.setId(id);
 		Pedidos oldObj = findById(id);
 		updatePedido(oldObj, objDTO);
+		LOGGER.info("Pedido atualizado com sucesso: " + oldObj.getId());
 		return pedidosRepository.save(oldObj);
 	}
 
@@ -139,8 +147,7 @@ public class PedidosService {
 			ItensPedido item;
 			if (itemDTO.getId() != null) {
 				// Busca o item existente para atualizar
-				item = itensPedidoRepository.findById(itemDTO.getId()).orElseThrow(
-						() -> new ObjectNotFoundException("Item do pedido não encontrado id: " + itemDTO.getId()));
+				item = itensPedidoService.findById(itemDTO.getId());
 			} else {
 				// Cria um novo item
 				item = new ItensPedido();
@@ -154,8 +161,19 @@ public class PedidosService {
 
 			newItensPedidoList.add(item);
 		}
-		// Remove os itens que não estão na nova lista
-		oldPedido.getItensPedido().removeIf(item -> !newItensPedidoList.contains(item));
+		 // Identifica os itens que não estão na nova lista para removê-los
+	    List<ItensPedido> itensParaRemover = oldPedido.getItensPedido().stream()
+	            .filter(item -> !newItensPedidoList.contains(item))
+	            .collect(Collectors.toList());
+	    
+	 // Logs para depuração
+        itensParaRemover.forEach(item -> LOGGER.info("Removendo item: " + item.getId()));
+
+	    // Remove os itens do banco de dados
+	    if (!itensParaRemover.isEmpty()) {
+	        itensPedidoRepository.deleteAll(itensParaRemover);
+            LOGGER.info("Itens removidos do banco de dados: " + itensParaRemover.size());
+	    }
 
 		// Atualiza a lista de itens do pedido
 		oldPedido.getItensPedido().clear();
