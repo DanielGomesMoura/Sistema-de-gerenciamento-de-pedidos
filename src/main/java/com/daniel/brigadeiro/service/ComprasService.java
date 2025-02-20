@@ -56,7 +56,7 @@ public class ComprasService {
 	}
 
 	public List<Compras> findAll() {
-		return comprasRepository.findAll();
+		return comprasRepository.findCompras();
 	}
 
 	
@@ -65,11 +65,13 @@ public class ComprasService {
 		}
 	
 	private Compras newCompras(ComprasDTO objDTO) {
+		Tipo_Recebimento recebimento = recebimentoService.findById(objDTO.getTipo_recebimento_fk());
 		
 		Compras compra = new Compras();
 		if(objDTO.getId() != null) {
 			compra.setId(objDTO.getId());
 		}
+		compra.setTipo_recebimento_fk(recebimento);
 		compra.setFornecedor(objDTO.getFornecedor());;
 		compra.setData_registro(objDTO.getData_registro());
 		compra.setNota_fiscal(objDTO.getNota_fiscal());
@@ -103,7 +105,7 @@ public class ComprasService {
 
 	private void updateCompra(Compras oldCompra, ComprasDTO objDTO) {
 		// Atualiza os campos do pedido
-		Tipo_Recebimento recebimento = recebimentoService.findById(objDTO.getTipo_recebemineto_fk());
+		Tipo_Recebimento recebimento = recebimentoService.findById(objDTO.getTipo_recebimento_fk());
 		oldCompra.setTipo_recebimento_fk(recebimento);
 		oldCompra.setValor_total(objDTO.getValor_total());
 		oldCompra.setData_registro(objDTO.getData_registro());

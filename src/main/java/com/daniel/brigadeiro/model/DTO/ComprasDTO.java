@@ -8,6 +8,7 @@ import com.daniel.brigadeiro.model.Compras;
 import com.daniel.brigadeiro.model.ItensCompra;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,7 +25,8 @@ public class ComprasDTO {
 	private String fornecedor;
   	private Double valor_total;
   	private String nota_fiscal; 
-  	private Long tipo_recebemineto_fk;
+  	@NotNull(message = "A conta é requerida")
+  	private Long tipo_recebimento_fk;
   	private String conta;
   	private String forma_pagamento;
   	private List<ItensCompraDTO> itensCompra;
@@ -36,6 +38,7 @@ public class ComprasDTO {
 		this.valor_total = obj.getValor_total();
 		this.fornecedor = obj.getFornecedor();
 		this.nota_fiscal = obj.getNota_fiscal();
+		this.tipo_recebimento_fk = obj.getTipo_recebimento_fk().getId();
 		this.conta = obj.getTipo_recebimento_fk().getConta_fk().getConta();
 		this.forma_pagamento = obj.getTipo_recebimento_fk().getTipo();
 		this.itensCompra = obj.getItensCompra().stream()
