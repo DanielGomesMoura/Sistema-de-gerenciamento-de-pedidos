@@ -38,7 +38,7 @@ public class Compras {
   	private String nota_fiscal;
   	
   	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "recebimento_id")
+	@JoinColumn(name = 	"recebimento_id")
 	private Tipo_Recebimento tipo_recebimento_fk;    
   	
   	@OneToMany(mappedBy = "compra_fk",cascade = CascadeType.ALL, fetch = FetchType.LAZY)

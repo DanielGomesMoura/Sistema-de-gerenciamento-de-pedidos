@@ -38,8 +38,8 @@ public class Tipo_RecebimentoService {
 		return recebimentoRepository.findAll();
 	}
 	
-	public List<TipoRecebimentoProjection> findByTipoRecebimento(String tipo) {
-		return recebimentoRepository.findAllTipoAndDescricao(tipo);
+	public List<TipoRecebimentoProjection> findByTipoRecebimento(String tipo,String categoria) {
+		return recebimentoRepository.findAllTipoAndDescricao(tipo, categoria);
 	}
 	
 	private void validarConta(Tipo_RecebimentoDTO objDTO) {
@@ -48,7 +48,7 @@ public class Tipo_RecebimentoService {
 	        .orElseThrow(() -> new DataIntegrityViolationException("Conta não encontrada"));
 
 	    // Agora, verifique se já existe um Tipo_Recebimento com essa conta
-	    Optional<Tipo_Recebimento> obj = recebimentoRepository.findByConta(conta,objDTO.getTipo());
+	    Optional<Tipo_Recebimento> obj = recebimentoRepository.findByConta(conta,objDTO.getTipo(),objDTO.getCategoria());
 
 	    // Verifica se já existe um Tipo_Recebimento com a mesma conta e se o ID é diferente (caso seja uma atualização)
 	    if (obj.isPresent() && !obj.get().getId().equals(objDTO.getId())) {
@@ -64,14 +64,15 @@ public class Tipo_RecebimentoService {
 		
 		private Tipo_Recebimento newTipo_Recebimento(Tipo_RecebimentoDTO obj) {
 			Conta conta = contaService.findById(obj.getConta_fk());
-			
 			Tipo_Recebimento recebimento = new Tipo_Recebimento();
+			
 			if(obj.getId() != null) {
 				recebimento.setId(obj.getId());
 			}
 			validarConta(obj);
 			recebimento.setConta_fk(conta);
 			recebimento.setTipo(obj.getTipo());
+			recebimento.setCategoria(obj.getCategoria());
 		
 			return recebimento;
 		}

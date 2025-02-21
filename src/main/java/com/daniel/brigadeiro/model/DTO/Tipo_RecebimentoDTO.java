@@ -19,11 +19,13 @@ public class Tipo_RecebimentoDTO implements Serializable{
 	private Long conta_fk;
 	private String conta;
 	private String tipo;
+	private String categoria;
 	
 	public Tipo_RecebimentoDTO(Tipo_Recebimento obj) {
 		this.id = obj.getId();
 		this.conta_fk = obj.getConta_fk().getId();
 		this.conta = obj.getConta_fk().getConta();
 		this.tipo = obj.getTipo();
+		this.categoria = obj.getCategoria();
 	}
 }
