@@ -43,8 +43,8 @@ public class Tipo_RecebimentoController {
 	        return ResponseEntity.ok().body(listDTO);
 	    }
 	  
-	  @GetMapping(value = "/combo/{tipo}")
-	    public ResponseEntity<List<TipoRecebimentoProjection>> findByTipoRecebimento(@PathVariable String tipo, String categoria){
+	  @GetMapping(value = "/combo/{tipo}/{categoria}")
+	    public ResponseEntity<List<TipoRecebimentoProjection>> findByTipoRecebimento(@PathVariable String tipo, @PathVariable String categoria){
 	        List<TipoRecebimentoProjection> list = recebimentoService.findByTipoRecebimento(tipo, categoria);
 	        return ResponseEntity.ok().body(list);
 	    }
