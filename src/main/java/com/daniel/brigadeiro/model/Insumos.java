@@ -1,7 +1,6 @@
 package com.daniel.brigadeiro.model;
 
 import com.daniel.brigadeiro.model.DTO.InsumosDTO;
-import com.daniel.brigadeiro.model.DTO.ProdutosDTO;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

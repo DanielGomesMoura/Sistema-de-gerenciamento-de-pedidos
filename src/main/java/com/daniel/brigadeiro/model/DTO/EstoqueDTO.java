@@ -1,22 +1,26 @@
 package com.daniel.brigadeiro.model.DTO;
 
+import java.time.LocalDate;
+
 import com.daniel.brigadeiro.model.Estoque;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 public class EstoqueDTO {
 
 	 private Long id;
 	 private Long insumo_fk;
 	 private String descricao;
-	 private Double quantidadeAtual;
+	 private Integer quantidadeAtual;
 	 private Double valorCustoMedio;
-	 private Double valorCustoAnterior;
+	 private LocalDate data_registro;
 	 
 	 
 	public EstoqueDTO(Estoque obj) {
@@ -25,6 +29,6 @@ public class EstoqueDTO {
 		this.descricao = obj.getInsumo().getDescricao();
 		this.quantidadeAtual = obj.getQuantidadeAtual();
 		this.valorCustoMedio = obj.getValorCustoMedio();
-		this.valorCustoAnterior = obj.getValorCustoAnterior();
+		this.data_registro = obj.getData_registro();
 	}
 }

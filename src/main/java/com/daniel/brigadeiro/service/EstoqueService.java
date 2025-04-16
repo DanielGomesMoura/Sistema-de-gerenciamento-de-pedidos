@@ -27,6 +27,7 @@ public class EstoqueService {
 		Optional<Estoque> obj = estoqueRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado id: " + id));
 	}
+	
 
 	public List<Estoque> findAll() {
 		return estoqueRepository.findAll();
@@ -47,7 +48,6 @@ public class EstoqueService {
 		}
 		estoque.setInsumo(insumos);
 		estoque.setQuantidadeAtual(obj.getQuantidadeAtual());
-		estoque.setValorCustoAnterior(obj.getValorCustoAnterior());
 		estoque.setValorCustoMedio(obj.getValorCustoMedio());
 		return estoque;
 	}

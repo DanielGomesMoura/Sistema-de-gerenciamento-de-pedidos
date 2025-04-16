@@ -1,14 +1,11 @@
 package com.daniel.brigadeiro.controller;
 
 import java.net.URI;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +14,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +27,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.daniel.brigadeiro.model.Pedidos;
 import com.daniel.brigadeiro.model.DTO.ClientesDTO;
 import com.daniel.brigadeiro.model.DTO.PedidosDTO;
+import com.daniel.brigadeiro.model.DTO.PedidosDetalheDTO;
 import com.daniel.brigadeiro.model.DTO.RankDTO;
+import com.daniel.brigadeiro.model.DTO.ResumoPedidosDTO;
 import com.daniel.brigadeiro.service.EmailService;
 import com.daniel.brigadeiro.service.PedidosService;
 import com.daniel.brigadeiro.service.RelatorioService;
@@ -122,5 +119,23 @@ public class PedidosController {
 	     public ResponseEntity<PedidosDTO> update(@PathVariable Long id, @Valid @RequestBody PedidosDTO objDTO){
 	    	 Pedidos obj = pedidosService.update(id, objDTO);
 	    	 return ResponseEntity.ok().body(new PedidosDTO(obj));
+	     }
+	     
+	     @PostMapping("/detalhes")
+	     public ResponseEntity<ResumoPedidosDTO> buscarDetalhes(@RequestBody List<Long> ids) {
+	         List<Pedidos> pedidos = pedidosService.buscarPorIds(ids);
+	         List<PedidosDetalheDTO> pedidosDTOs = pedidos.stream()
+	             .map(PedidosDetalheDTO::new)
+	             .collect(Collectors.toList());
+	         
+	         // Calcular o valor total dos pedidos
+	         double valorTotal = pedidos.stream()
+	             .mapToDouble(Pedidos::getValor_total)
+	             .sum();
+	         
+	         //Criar um resumo com os detalhes dos pedidos com o valor total de todos
+	         ResumoPedidosDTO resumo = new ResumoPedidosDTO(valorTotal,pedidosDTOs);
+	         
+	         return ResponseEntity.ok(resumo);
 	     }
 }

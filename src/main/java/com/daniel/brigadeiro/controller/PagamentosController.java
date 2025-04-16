@@ -1,8 +1,10 @@
 package com.daniel.brigadeiro.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.daniel.brigadeiro.model.Pagamentos;
 import com.daniel.brigadeiro.model.DTO.PagamentosDTO;
+import com.daniel.brigadeiro.model.DTO.PagamentosLoteDTO;
 import com.daniel.brigadeiro.service.PagamentosService;
 
 import jakarta.validation.Valid;
@@ -45,4 +48,15 @@ public class PagamentosController {
 	    	Pagamentos obj = pagamentosService.update(id, objDTO);
 	    	 return ResponseEntity.ok().body(new PagamentosDTO(obj));
 	     }
+	    
+	    @PostMapping("/pagar-lote")
+	    public ResponseEntity<String> pagarPedidosEmLote(@RequestBody PagamentosLoteDTO pagamentosLoteDTO) {
+	        try {
+	            pagamentosService.realizarPagamentoEmLote(pagamentosLoteDTO);
+	            return ResponseEntity.ok("Pagamento em lote realizado com sucesso!");
+	        } catch (Exception e) {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                                 .body("Erro ao realizar o pagamento: " + e.getMessage());
+	        }
+	    }
 }

@@ -8,9 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.daniel.brigadeiro.model.Admin;
 import com.daniel.brigadeiro.model.Clientes;
-import com.daniel.brigadeiro.model.Conta;
-import com.daniel.brigadeiro.model.Tipo_Recebimento;
-import com.daniel.brigadeiro.model.DTO.ClientesDTO;
 import com.daniel.brigadeiro.model.enums.Perfil;
 import com.daniel.brigadeiro.repository.AdminRepository;
 import com.daniel.brigadeiro.repository.ClientesRepository;

@@ -25,7 +25,7 @@ import jakarta.validation.Valid;
 
 @Service
 public class PedidosService {
-	
+
 	private static final Logger LOGGER = Logger.getLogger(PedidosService.class.getName());
 
 	@Autowired
@@ -33,7 +33,7 @@ public class PedidosService {
 
 	@Autowired
 	ItensPedidoRepository itensPedidoRepository;
-	
+
 	@Autowired
 	ItensPedidoService itensPedidoService;
 
@@ -51,30 +51,30 @@ public class PedidosService {
 //	public List<Pedidos> findAll() {
 //		return pedidosRepository.findAll();
 //	}
-	
+
 	public List<Pedidos> findByDay(LocalDate dataInicial, LocalDate dataFinal, String situacao) {
-		if(situacao.equals("TODOS"))
-		   situacao = "%";
+		if (situacao.equals("TODOS"))
+			situacao = "%";
 		return pedidosRepository.findByDay(dataInicial, dataFinal, situacao);
-	} 
-	
-	//CONSULTA USANDO JPQL
-	
+	}
+
+	// CONSULTA USANDO JPQL
+
 	public List<RankDTO> ranking() {
 		// Obter as datas de início (segunda-feira) e fim (sexta-feira) da semana atual
-        LocalDate[] intervaloSemana = DataSemanaService.getIntervaloSemana();
-        LocalDate dataInicio = intervaloSemana[0]; // Segunda-feira
-        LocalDate dataFim = intervaloSemana[1]; // Sexta-feira
-		 List<RankDTO> result = itensPedidoRepository.findPedidosByStatus(dataInicio,dataFim);
-		    int index = 1;
-		    for (RankDTO dto : result) {
-		        dto.setRowId(index++); // Supondo que você tenha um campo `rowNumber` no `RankDTO`
-		    }
+		LocalDate[] intervaloSemana = DataSemanaService.getIntervaloSemana();
+		LocalDate dataInicio = intervaloSemana[0]; // Segunda-feira
+		LocalDate dataFim = intervaloSemana[1]; // Sexta-feira
+		List<RankDTO> result = itensPedidoRepository.findPedidosByStatus(dataInicio, dataFim);
+		int index = 1;
+		for (RankDTO dto : result) {
+			dto.setRowId(index++); // Supondo que você tenha um campo `rowNumber` no `RankDTO`
+		}
 		return result;
 	}
-	
-	//CONSULTA USANDO SQL NATIVO
-	
+
+	// CONSULTA USANDO SQL NATIVO
+
 //	public List<RankDTO> ranking(){
 //		List<Object[]> resultado = itensPedidoRepository.findPedidosByStatusNativo();
 //		List<RankDTO> rank = new ArrayList<>();
@@ -137,7 +137,7 @@ public class PedidosService {
 		oldPedido.setCliente_fk(cli);
 		oldPedido.setValor_total(objDTO.getValor_total());
 		oldPedido.setData_registro(objDTO.getData_registro());
-		
+
 		// Status é mantido como está ou atualizado conforme sua lógica
 
 		// Atualiza os itens do pedido
@@ -161,19 +161,18 @@ public class PedidosService {
 
 			newItensPedidoList.add(item);
 		}
-		 // Identifica os itens que não estão na nova lista para removê-los
-	    List<ItensPedido> itensParaRemover = oldPedido.getItensPedido().stream()
-	            .filter(item -> !newItensPedidoList.contains(item))
-	            .collect(Collectors.toList());
-	    
-	 // Logs para depuração
-        itensParaRemover.forEach(item -> LOGGER.info("Removendo item: " + item.getId()));
+		// Identifica os itens que não estão na nova lista para removê-los
+		List<ItensPedido> itensParaRemover = oldPedido.getItensPedido().stream()
+				.filter(item -> !newItensPedidoList.contains(item)).collect(Collectors.toList());
 
-	    // Remove os itens do banco de dados
-	    if (!itensParaRemover.isEmpty()) {
-	        itensPedidoRepository.deleteAll(itensParaRemover);
-            LOGGER.info("Itens removidos do banco de dados: " + itensParaRemover.size());
-	    }
+		// Logs para depuração
+		itensParaRemover.forEach(item -> LOGGER.info("Removendo item: " + item.getId()));
+
+		// Remove os itens do banco de dados
+		if (!itensParaRemover.isEmpty()) {
+			itensPedidoRepository.deleteAll(itensParaRemover);
+			LOGGER.info("Itens removidos do banco de dados: " + itensParaRemover.size());
+		}
 
 		// Atualiza a lista de itens do pedido
 		oldPedido.getItensPedido().clear();
@@ -183,5 +182,10 @@ public class PedidosService {
 	public void atualizarStatusParaPago(Pedidos pedido) {
 		pedido.setStatus("PAGO");
 		pedidosRepository.save(pedido);
+	}
+
+	public List<Pedidos> buscarPorIds(List<Long> pedidoIds) {
+		return pedidosRepository.findAllById(pedidoIds);
+		
 	}
 }

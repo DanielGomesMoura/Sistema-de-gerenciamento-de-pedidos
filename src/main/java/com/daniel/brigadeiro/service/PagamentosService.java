@@ -1,6 +1,7 @@
 package com.daniel.brigadeiro.service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.daniel.brigadeiro.model.Pagamentos;
 import com.daniel.brigadeiro.model.Pedidos;
 import com.daniel.brigadeiro.model.Tipo_Recebimento;
 import com.daniel.brigadeiro.model.DTO.PagamentosDTO;
+import com.daniel.brigadeiro.model.DTO.PagamentosLoteDTO;
 import com.daniel.brigadeiro.repository.Movimento_CaixaRepository;
 import com.daniel.brigadeiro.repository.PagamentosRepository;
 import com.daniel.brigadeiro.repository.PedidosRepository;
@@ -101,4 +103,33 @@ public class PagamentosService {
 		oldObj = newPagamento(objDTO);
 		return pagamentosRepository.save(oldObj);
 	}
+	
+	 public void realizarPagamentoEmLote(PagamentosLoteDTO pagamentoLoteDTO) {
+	        // Buscar todos os pedidos pelos IDs fornecidos
+	        List<Pedidos> pedidos = pedidosRepository.findAllById(pagamentoLoteDTO.getPedidoIds());
+	        Tipo_Recebimento recebimento = recebimentoService.findById(pagamentoLoteDTO.getTipo_recebimento_fk());
+
+	        // Validar se todos os pedidos estão "ABERTOS"
+	        for (Pedidos pedido : pedidos) {
+	            if (!"ABERTO".equals(pedido.getStatus())) {
+	                throw new RuntimeException("Pedido com ID " + pedido.getId() + " não está aberto para pagamento.");
+	            }
+	        }
+
+	        // Criar e salvar os registros de pagamentos
+	        for (Pedidos pedido : pedidos) {
+	            Pagamentos pagamento = new Pagamentos();
+	            pagamento.setPedido_fk(pedido);
+	            pagamento.setValor_pagamento(pedido.getValor_total());
+	            pagamento.setTipo_recebimento_fk(recebimento);
+	            pagamento.setData_registro_pagamento(LocalDate.now());
+	            pagamentosRepository.save(pagamento);
+
+	            // Atualizar o status do pedido para "PAGO"
+	            pedido.setStatus("PAGO");
+	        }
+
+	        // Salvar os pedidos atualizados
+	        pedidosRepository.saveAll(pedidos);
+	    }
 }

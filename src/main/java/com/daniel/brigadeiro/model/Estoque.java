@@ -1,5 +1,9 @@
 package com.daniel.brigadeiro.model;
 
+import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -28,7 +32,8 @@ public class Estoque {
 	    @JoinColumn(name = "insumo_id", nullable = false)
 	    private Insumos insumo;
 	    
-	    private Double quantidadeAtual;
+	    private Integer quantidadeAtual;
 	    private Double valorCustoMedio;
-	    private Double valorCustoAnterior;
+	    @JsonFormat(pattern = "dd/MM/yyyy")
+		private LocalDate data_registro;
 }

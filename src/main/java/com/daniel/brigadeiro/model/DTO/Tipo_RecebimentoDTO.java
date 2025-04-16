@@ -2,7 +2,6 @@ package com.daniel.brigadeiro.model.DTO;
 
 import java.io.Serializable;
 
-import com.daniel.brigadeiro.model.Conta;
 import com.daniel.brigadeiro.model.Tipo_Recebimento;
 
 import lombok.Getter;
