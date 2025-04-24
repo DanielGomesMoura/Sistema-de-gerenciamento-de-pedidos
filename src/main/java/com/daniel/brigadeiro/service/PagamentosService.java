@@ -106,7 +106,7 @@ public class PagamentosService {
 	
 	 public void realizarPagamentoEmLote(PagamentosLoteDTO pagamentoLoteDTO) {
 	        // Buscar todos os pedidos pelos IDs fornecidos
-	        List<Pedidos> pedidos = pedidosRepository.findAllById(pagamentoLoteDTO.getPedidoIds());
+	        List<Pedidos> pedidos = pedidosRepository.findAllById(pagamentoLoteDTO.getPedido_fk_lote());
 	        Tipo_Recebimento recebimento = recebimentoService.findById(pagamentoLoteDTO.getTipo_recebimento_fk());
 
 	        // Validar se todos os pedidos estão "ABERTOS"

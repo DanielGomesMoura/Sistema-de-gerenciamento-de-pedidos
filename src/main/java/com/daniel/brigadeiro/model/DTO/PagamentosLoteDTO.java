@@ -19,7 +19,7 @@ public class PagamentosLoteDTO {
     private Double valorTotal;
     private Double valor_pagamento;
     private String tipoRecebimento;
-    private List<Long> pedidoIds; // Lista de IDs de pedidos
+    private List<Long> pedido_fk_lote; // Lista de IDs de pedidos
     
     @JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate data_registro_pagamento;
