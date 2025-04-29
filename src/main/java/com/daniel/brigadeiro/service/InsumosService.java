@@ -45,11 +45,7 @@ public class InsumosService {
 		Insumos obj = new Insumos(objDTO);
 		insumosRepository.save(obj);
 		
-		Estoque estoque = new Estoque(null, obj, null, null, null);
-		estoqueRepository.save(estoque);
-		
 		return obj;
-		
 	}
 
 	public Insumos update(Long id, @Valid InsumosDTO objDTO ) {
@@ -58,10 +54,6 @@ public class InsumosService {
 
 		oldObj = new Insumos(objDTO);
 		insumosRepository.save(oldObj);	
-		
-		Estoque oldEstoque = findByInsumosId(id);
-		oldEstoque = new Estoque(oldEstoque.getId(),oldObj,null,null,null);
-		estoqueRepository.save(oldEstoque);
 		
 		return oldObj;
 	}

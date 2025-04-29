@@ -22,11 +22,13 @@ import com.daniel.brigadeiro.model.Pedidos;
 import com.daniel.brigadeiro.model.Produtos;
 import com.daniel.brigadeiro.model.Tipo_Recebimento;
 import com.daniel.brigadeiro.model.DTO.ComprasDTO;
+import com.daniel.brigadeiro.model.DTO.InsumosDTO;
 import com.daniel.brigadeiro.model.DTO.ItensCompraDTO;
 import com.daniel.brigadeiro.model.DTO.ItensPedidoDTO;
 import com.daniel.brigadeiro.model.DTO.PedidosDTO;
 import com.daniel.brigadeiro.repository.ComprasRepository;
 import com.daniel.brigadeiro.repository.EstoqueRepository;
+import com.daniel.brigadeiro.repository.InsumosRepository;
 import com.daniel.brigadeiro.repository.ItensCompraRepository;
 import com.daniel.brigadeiro.service.exception.ObjectNotFoundException;
 
@@ -54,7 +56,8 @@ public class ComprasService {
 	private InsumosService insumosService;
 	
 	@Autowired
-	private EstoqueRepository estoqueRepository;
+	private InsumosRepository insumosRepository;
+
 	
 	public Compras findById(Long id) {
 		Optional<Compras> obj = comprasRepository.findById(id);
@@ -96,21 +99,20 @@ public class ComprasService {
 				itensCompraList.add(item);
 				
 				 // Atualiza o estoque do insumo
-				Estoque estoque = new Estoque();
-		        Integer estoqueAtual = estoque.getQuantidadeAtual(); // Supondo que você tenha esse campo
-		        Double custo = estoque.getValorCustoMedio();
+		        Integer estoqueAtual = insumo.getEstoque(); // Supondo que você tenha esse campo
+		        Double custo = insumo.getCusto_medio();
 		        if (estoqueAtual == null && custo == null) {
 		            estoqueAtual = 0;
 		            custo = 0.0;
 		        }
 		        
 		        Integer novaQuantidade = estoqueAtual + itemDTO.getQuantidade();
-		        estoque.setInsumo(insumo);
-		        estoque.setQuantidadeAtual(novaQuantidade);
+		        insumo.setId(insumo.getId());
+		        insumo.setEstoque(novaQuantidade);
 		        Double custoMedio = ((estoqueAtual * custo) + (itemDTO.getQuantidade() * itemDTO.getValor_unitario())) / (estoqueAtual + itemDTO.getQuantidade());
-		        estoque.setValorCustoMedio(custoMedio);
-		        estoque.setData_registro(LocalDate.now());
-		        estoqueRepository.save(estoque);
+		        insumo.setCusto_medio(custoMedio);
+		        insumo.setData_ultima_compra(LocalDate.now());
+		        insumosRepository.save(insumo);
 			}
 			compra.setItensCompra(itensCompraList);
 		}		

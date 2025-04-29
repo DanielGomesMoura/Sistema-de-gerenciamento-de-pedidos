@@ -33,7 +33,8 @@ public class Estoque {
 	    private Insumos insumo;
 	    
 	    private Integer quantidadeAtual;
-	    private Double valorCustoMedio;
-	    @JsonFormat(pattern = "dd/MM/yyyy")
+	    private Double valorUnitario;
+	    private String tipo;
+	    private String motivo;
 		private LocalDate data_registro;
 }

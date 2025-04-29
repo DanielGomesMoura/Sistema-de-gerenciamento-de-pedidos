@@ -48,7 +48,10 @@ public class EstoqueService {
 		}
 		estoque.setInsumo(insumos);
 		estoque.setQuantidadeAtual(obj.getQuantidadeAtual());
-		estoque.setValorCustoMedio(obj.getValorCustoMedio());
+		estoque.setValorUnitario(obj.getValorUnitario());
+		estoque.setMotivo(obj.getMotivo());
+		estoque.setTipo(obj.getTipo());
+		estoque.setData_registro(obj.getData_registro());
 		return estoque;
 	}
 	
@@ -58,5 +61,4 @@ public class EstoqueService {
 		oldObj = newEstoque(objDTO);
 		return estoqueRepository.save(oldObj);
 	}
-
 }
