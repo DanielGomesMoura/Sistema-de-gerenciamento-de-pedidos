@@ -23,4 +23,10 @@ public class RelatorioService {
 	        JasperPrint jasperPrint = JasperFillManager.fillReport(reportStream, null, dataSource.getConnection());
 	        return JasperExportManager.exportReportToPdf(jasperPrint);
 	    }
+	  
+	  public byte[] generateReport(String reportName, Map<String, Object> parameters) throws Exception {
+	        InputStream reportStream = getClass().getResourceAsStream("/relatorios/" + reportName + ".jasper");
+	        JasperPrint jasperPrint = JasperFillManager.fillReport(reportStream, parameters, dataSource.getConnection());
+	        return JasperExportManager.exportReportToPdf(jasperPrint);
+	    }
 }

@@ -5,7 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +61,23 @@ public class PedidosController {
 	     public ResponseEntity<byte[]> viewReport(@PathVariable String reportName) {
 	         try {
 	             byte[] reportData = reportService.generateReport(reportName);
+	             HttpHeaders headers = new HttpHeaders();
+	             headers.setContentType(MediaType.APPLICATION_PDF);
+	             return ResponseEntity.ok().headers(headers).body(reportData);
+	         } catch (Exception e) {
+	        	 System.out.println(e);
+	             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+	         }
+	     }
+	     
+	     @GetMapping("/view/relatorio-saldo/{id}")
+	     public ResponseEntity<byte[]> ImprimirSaldo(@PathVariable Long id) {
+	         try {
+	        	 // Cria o mapa de parâmetros
+	             Map<String, Object> parametros = new HashMap<>();
+	             parametros.put("id", id);
+
+	             byte[] reportData = reportService.generateReport("relatorio_saldo_cliene", parametros);
 	             HttpHeaders headers = new HttpHeaders();
 	             headers.setContentType(MediaType.APPLICATION_PDF);
 	             return ResponseEntity.ok().headers(headers).body(reportData);
