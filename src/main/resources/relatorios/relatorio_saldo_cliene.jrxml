@@ -72,7 +72,7 @@ order by c.nome,p.data_registro]]></query>
 	</columnHeader>
 	<detail>
 		<band height="19" splitType="Stretch">
-			<element kind="textField" uuid="d2c4e449-8431-4c26-99da-4b60b5cf882d" x="0" y="0" width="240" height="19" printRepeatedValues="false" printInFirstWholeBand="true" vTextAlign="Middle">
+			<element kind="textField" uuid="d2c4e449-8431-4c26-99da-4b60b5cf882d" x="0" y="0" width="240" height="19" printRepeatedValues="false" vTextAlign="Middle">
 				<paragraph leftIndent="5"/>
 				<expression><![CDATA[$F{nome}]]></expression>
 				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="380353a3-708e-445c-83fe-894ce788fabc"/>

@@ -27,7 +27,7 @@ order by c.nome,p.data_registro]]></query>
 	<group name="Group1" keepTogether="true">
 		<expression><![CDATA[$F{nome}]]></expression>
 		<groupHeader>
-			<band height="40">
+			<band height="40" splitType="Stretch">
 				<element kind="staticText" uuid="98ac6810-aa77-4cde-b12e-5da53aeb289f" mode="Opaque" x="240" y="20" width="100" height="20" backcolor="#FAF8A5" bold="true" hTextAlign="Left" vTextAlign="Middle">
 					<paragraph leftIndent="5"/>
 					<text><![CDATA[Data da compra]]></text>
@@ -125,17 +125,17 @@ order by c.nome,p.data_registro]]></query>
 					<rightPen lineWidth="0.0"/>
 				</box>
 			</element>
-			<element kind="textField" uuid="c6468526-eccc-4543-9082-06e2650d85d6" x="0" y="0" width="240" height="19" printRepeatedValues="false" printInFirstWholeBand="true" vTextAlign="Middle">
-				<paragraph leftIndent="5"/>
+			<element kind="textField" uuid="9aa8e321-9f43-4815-a7b6-166f2e22ad3f" x="0" y="0" width="240" height="19" printRepeatedValues="false" vTextAlign="Middle">
 				<expression><![CDATA[$F{nome}]]></expression>
-				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="380353a3-708e-445c-83fe-894ce788fabc"/>
-				<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
-				<box>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="795bcfc5-23b9-4fac-9979-2b215e2f3d62"/>
+				<box leftPadding="5" rightPadding="0">
+					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
 					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
 			</element>
+			<property name="com.jaspersoft.studio.layout"/>
 		</band>
 	</detail>
 </jasperReport>
